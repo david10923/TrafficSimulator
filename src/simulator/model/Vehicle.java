@@ -1,6 +1,8 @@
 package simulator.model;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -22,7 +24,8 @@ public class Vehicle extends SimulatedObject{
 	protected int Pollution; // durante todo el recorrido 
 	protected int Global_distance_traveled;
 	
-	protected int Last_Junction_index;
+	protected int Last_Junction_index;	
+	private Junction junction;// no hace falta ya que la carretera tiene de donde viene 
 	protected int ancientLocalization;
 	private static int number = 10 ;
 	
@@ -42,10 +45,13 @@ public class Vehicle extends SimulatedObject{
 		else {
 			this._id = id; 
 			this.Max_Speed = maxSpeed;
-			this.Itinerary = itinerary;
+			this.Itinerary = Collections.unmodifiableList(new ArrayList<>(itinerary));
+			
+		
 			
 			setContaminationClass(contClass);
 			this.Last_Junction_index=0;
+			this.Status= this.Status.PENDING;
 			
 		}
 	}
@@ -53,6 +59,7 @@ public class Vehicle extends SimulatedObject{
 	@Override
 	public void advance(int time) {
 		int Posible_Pollution = 0;
+		
 		if(Status == VehicleStatus.TRAVELING) {// Donde inicializar la localizacion		
 			//a
 			this.Localization = Math.min(this.Localization+this.Current_Speed, this.Road.getLength());
@@ -65,7 +72,7 @@ public class Vehicle extends SimulatedObject{
 			//c 
 			if(this.Localization == this.Road.getLength()) {
 				// entrar en la cola del metodo correspodiente del cruce
-				this.Itinerary.add(this.Road.getDestination());
+				
 				
 			}
 			
@@ -101,15 +108,30 @@ public class Vehicle extends SimulatedObject{
 	}
 	
 	protected void moveToNextRoad() {
-		Junction j;
+		Junction actualJunc , nextJunc;
+		
+		// en principio empiezas en un cruce 
 		
 		this.Road.exit(this);
 		
 		if(this.Status == Status.PENDING) {
 			
 		}else {
-			j = this.Itinerary.get(this.Localization);
 			
+			actualJunc =this.Road.getDestination();// cruce destino de la carretera
+			
+			this.Last_Junction_index++;
+			nextJunc=this.Itinerary.get(this.Last_Junction_index); //el siguiente cruce
+			
+			
+			
+			//carretera que une los dos cruces
+			
+		
+		
+		
+		//this.Road.enter(this);
+		
 		}
 		
 		
@@ -137,6 +159,14 @@ public class Vehicle extends SimulatedObject{
 
 	public void setStatus(VehicleStatus status) {
 		Status = status;
+	}
+
+	public Junction getJunction() {
+		return junction;
+	}
+
+	public void setJunction(Junction junction) {
+		this.junction = junction;
 	}
 	
 	
