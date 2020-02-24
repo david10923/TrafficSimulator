@@ -38,7 +38,7 @@ public abstract class Road extends SimulatedObject {
 		else {
 			this.Max_Speed = maxSpeed; 
 			this.Length = length; 
-			setWeather(weather);
+			this.environmental_conditions = weather;
 			this.Destination = destJunc; 
 			this.Source= srcJunc; 
 			
@@ -57,19 +57,29 @@ public abstract class Road extends SimulatedObject {
 		updateSpeedLimit();
 		//3
 		for(Vehicle c : this.Vehicles) {
-			c.Current_Speed = calculateVehicleSpeed();
+			c.Current_Speed = calculateVehicleSpeed(c);
 			c.advance(time);		
 		}
 		
 		
 		this.Vehicles.sort(null); 
+			
 		
 	}
 
 	@Override
 	public JSONObject report() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		JSONObject road = new JSONObject();
+		
+		road.put("id", this._id);
+		road.put("speedLimit", this.Max_Speed);
+		road.put("weather", this.environmental_conditions);
+		road.put("co2", this.Global_Pollution);
+		road.put("vehicles", this.Vehicles);
+		
+		
+		return road;
 	}
 	
 	public void enter(Vehicle v) throws Exception {
@@ -88,12 +98,22 @@ public abstract class Road extends SimulatedObject {
 		this.Vehicles.remove(this.Vehicles.indexOf(v));
 	}
 	
-	public void setWeather(Weather w) {//pone que debe lanzar una excepcion pero ya se comprueba en el constructor
-		this.environmental_conditions = w ; 
+	public void setWeather(Weather w) throws Exception{
+		if(w==null)
+			throw new Exception("The weather is null");
+		else {
+			this.environmental_conditions = w ;
+		}
+		 
 	}
 	
 	
-	public void addContamination(int c){// el mismo caso que weather
+	public void addContamination(int c) throws InvalidArgumentException{// el mismo caso que weather
+		if(c<0) 
+			throw new InvalidArgumentException("The pollution is less than cero");
+		else
+			this.Global_Pollution= c ;
+			
 		
 		
 	
@@ -129,7 +149,7 @@ public abstract class Road extends SimulatedObject {
 	
 	protected abstract void reduceTotalContamination() ;
 	protected abstract void updateSpeedLimit(); 
-	protected abstract int calculateVehicleSpeed();
+	protected abstract int calculateVehicleSpeed(Vehicle v);
 	
 
 }

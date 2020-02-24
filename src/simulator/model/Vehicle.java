@@ -57,7 +57,7 @@ public class Vehicle extends SimulatedObject{
 	}
 
 	@Override
-	public void advance(int time) {
+	public void advance(int time)  {
 		int Posible_Pollution = 0;
 		
 		if(Status == VehicleStatus.TRAVELING) {// Donde inicializar la localizacion		
@@ -68,11 +68,16 @@ public class Vehicle extends SimulatedObject{
 			
 			this.Pollution+= this.Degree_of_Pollution;
 			
-			this.Road.addContamination(this.Degree_of_Pollution);
+			try {
+				this.Road.addContamination(this.Degree_of_Pollution);
+			} catch (InvalidArgumentException e) {
+				e.toString();
+			}
 			//c 
 			if(this.Localization == this.Road.getLength()) {
 				// entrar en la cola del metodo correspodiente del cruce
 				
+			junction.getOutgoingRoadList();
 				
 			}
 			
@@ -84,7 +89,20 @@ public class Vehicle extends SimulatedObject{
 	@Override
 	public JSONObject report() {
 		
-		return null;
+		JSONObject vehicle = new JSONObject();
+		
+		
+		vehicle.put("id", this._id);
+		vehicle.put("speed", this.Current_Speed);
+		vehicle.put("distance", this.Global_distance_traveled);
+		vehicle.put("co2",this.Degree_of_Pollution);
+		vehicle.put("class",this.Status);
+		if(this.Status==VehicleStatus.TRAVELING || this.Status == VehicleStatus.WAITING ) {
+			vehicle.put("road", this.Road);	
+			vehicle.put("location",this.Localization);			
+		}
+		
+		return vehicle;
 	}
 	
 	
