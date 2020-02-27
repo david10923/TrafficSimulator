@@ -3,6 +3,7 @@ package simulator.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -12,20 +13,28 @@ import Exceptions.InvalidArgumentException;
 
 import java.math.*;
 
-public class Vehicle extends SimulatedObject{
+public class Vehicle extends SimulatedObject {
 	
 	private List<Junction> Itinerary; 
 	protected int Max_Speed; 
 	protected int Current_Speed;
 	private VehicleStatus Status;
 	private Road Road; 
-	protected int Localization;
+	private  int Localization;
+	public int getLocalization() {
+		return Localization;
+	}
+
+	public void setLocalization(int localization) {
+		Localization = localization;
+	}
+
 	protected int Degree_of_Pollution; //contaminacion del vehiculo en cada paso de la simulacion
 	protected int Pollution; // durante todo el recorrido 
 	protected int Global_distance_traveled;
 	
 	protected int Last_Junction_index;	
-	private Junction junction;// no hace falta ya que la carretera tiene de donde viene 
+	//private Junction junction;// no hace falta ya que la carretera tiene de donde viene 
 	protected int ancientLocalization;
 	private static int number = 10 ;
 	
@@ -75,9 +84,14 @@ public class Vehicle extends SimulatedObject{
 			}
 			//c 
 			if(this.Localization == this.Road.getLength()) {
-				// entrar en la cola del metodo correspodiente del cruce
 				
-			junction.getOutgoingRoadList();
+				this.Itinerary.get(this.Last_Junction_index).enter(this, this.Road);
+				this.Status = Status.WAITING;
+				
+				
+				
+		//	junction.getOutgoingRoadList();
+		//	this.Road = junction.getValue(this.junction);
 				
 			}
 			
@@ -106,7 +120,7 @@ public class Vehicle extends SimulatedObject{
 	}
 	
 	
-	protected void setSpeed (int s) throws Exception {		
+	 void setSpeed (int s) throws Exception {		
 		if(s <0 ) {
 			throw new InvalidArgumentException("Incorrect,the Speed is negative");
 		}
@@ -115,7 +129,7 @@ public class Vehicle extends SimulatedObject{
 		}
 	}
 	
-	protected void setContaminationClass(int c) throws Exception{
+	 void setContaminationClass(int c) throws Exception{
 		if(c<0 || c >10) {
 			throw new InvalidArgumentException("Incorrect contClass value");	
 			
@@ -125,30 +139,33 @@ public class Vehicle extends SimulatedObject{
 		
 	}
 	
-	protected void moveToNextRoad() {
+	 void moveToNextRoad() throws Exception {
 		Junction actualJunc , nextJunc;
 		
-		// en principio empiezas en un cruce 
+		
 		
 		this.Road.exit(this);
 		
-		if(this.Status == Status.PENDING) {
+		if(this.Status == Status.PENDING) { 
 			
-		}else {
+			actualJunc = this.Itinerary.get(this.Last_Junction_index);
 			
-			actualJunc =this.Road.getDestination();// cruce destino de la carretera
+			nextJunc=this.Itinerary.get(this.Last_Junction_index +1); 
 			
-			this.Last_Junction_index++;
-			nextJunc=this.Itinerary.get(this.Last_Junction_index); //el siguiente cruce
+			actualJunc.roadTo(nextJunc);
 			
+		}else {	
 			
+			actualJunc= this.Itinerary.get(this.Last_Junction_index); 
 			
-			//carretera que une los dos cruces
+			nextJunc=this.Itinerary.get(this.Last_Junction_index +1); 
 			
-		
-		
-		
-		//this.Road.enter(this);
+			this.Road=actualJunc.roadTo(nextJunc);	
+
+			
+			this.Road.enter(this);
+			// falta ponerle en la localizacion 0 
+			
 		
 		}
 		
@@ -162,6 +179,9 @@ public class Vehicle extends SimulatedObject{
 	public void setItinerary(List<Junction> itinerary) {
 		Itinerary = itinerary;
 	}
+	
+
+	
 
 	public Road getRoad() {
 		return Road;
@@ -179,13 +199,7 @@ public class Vehicle extends SimulatedObject{
 		Status = status;
 	}
 
-	public Junction getJunction() {
-		return junction;
-	}
-
-	public void setJunction(Junction junction) {
-		this.junction = junction;
-	}
+	
 	
 	
 	

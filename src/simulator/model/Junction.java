@@ -52,14 +52,19 @@ public class Junction extends SimulatedObject {
 	}
 	
 	public Road roadTo(Junction j) {
-		return null;
+		
+		return this.OutgoingRoadList.get(j);	
+		
 	}
 
 
 
 	public int getyCoor() {
+		
 		return yCoor;
 	}
+	
+	
 
 
 
@@ -162,6 +167,12 @@ public class Junction extends SimulatedObject {
 	public void setStrategy_of_droping_vehicles(DequeingStrategy strategy_of_droping_vehicles) {
 		Strategy_of_droping_vehicles = strategy_of_droping_vehicles;
 	}
+	
+	/*
+	public Road getValue(Junction j) {
+		return this.OutgoingRoadList.get(j);
+	}
+	*/
 	
 	
 }

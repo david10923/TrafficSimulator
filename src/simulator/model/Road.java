@@ -1,12 +1,14 @@
 package simulator.model;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.json.JSONObject;
 
 import Exceptions.InvalidArgumentException;
 
-public abstract class Road extends SimulatedObject {
+public abstract class Road extends SimulatedObject implements Comparable<Vehicle> {
 	private int Length; 
 	private Junction Destination; 
 	private Junction Source;
@@ -36,6 +38,7 @@ public abstract class Road extends SimulatedObject {
 			throw new InvalidArgumentException("Incorrect road ,the contLimit is negative");
 		}
 		else {
+		
 			this.Max_Speed = maxSpeed; 
 			this.Length = length; 
 			this.environmental_conditions = weather;
@@ -62,10 +65,11 @@ public abstract class Road extends SimulatedObject {
 		}
 		
 		
-		this.Vehicles.sort(null); 
-			
+		Collections.sort(this.Vehicles); 			
+		
 		
 	}
+	
 
 	@Override
 	public JSONObject report() {
@@ -84,7 +88,7 @@ public abstract class Road extends SimulatedObject {
 	
 	public void enter(Vehicle v) throws Exception {
 		
-		if(v.Localization==0 &&v.Current_Speed ==0) {
+		if(v.getLocalization()==0 &&v.Current_Speed ==0) {
 			this.Vehicles.add(v);
 		}
 		else {
@@ -145,6 +149,11 @@ public abstract class Road extends SimulatedObject {
 
 	public void setSource(Junction source) {
 		Source = source;
+	}
+	
+	public int compareTo(Vehicle v1 , Vehicle v2) {		
+		return Integer.valueOf(v1.getLocalization()).compareTo(v2.getLocalization());			
+		
 	}
 	
 	protected abstract void reduceTotalContamination() ;
