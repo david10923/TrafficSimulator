@@ -13,11 +13,30 @@ import Exceptions.InvalidArgumentException;
 
 import java.math.*;
 
-public class Vehicle extends SimulatedObject {
+public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 	
 	private List<Junction> Itinerary; 
-	protected int Max_Speed; 
-	protected int Current_Speed;
+	private  int Max_Speed; 
+	private int Current_Speed;
+	
+	
+	
+	public int getMax_Speed() {
+		return Max_Speed;
+	}
+
+	public void setMax_Speed(int max_Speed) {
+		Max_Speed = max_Speed;
+	}
+
+	public int getCurrent_Speed() {
+		return Current_Speed;
+	}
+
+	public void setCurrent_Speed(int current_Speed) {
+		Current_Speed = current_Speed;
+	}
+
 	private VehicleStatus Status;
 	private Road Road; 
 	private  int Localization;
@@ -199,10 +218,11 @@ public class Vehicle extends SimulatedObject {
 		Status = status;
 	}
 
-	
-	
-	
-	
+	@Override
+	public int compareTo(Vehicle o) {
+		return Integer.valueOf(this.Localization).compareTo(o.getLocalization());
+	}
+
 	
 	
 	

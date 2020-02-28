@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import Exceptions.InvalidArgumentException;
 
-public abstract class Road extends SimulatedObject implements Comparable<Vehicle> {
+public abstract class Road extends SimulatedObject {
 	private int Length; 
 	private Junction Destination; 
 	private Junction Source;
@@ -60,10 +60,9 @@ public abstract class Road extends SimulatedObject implements Comparable<Vehicle
 		updateSpeedLimit();
 		//3
 		for(Vehicle c : this.Vehicles) {
-			c.Current_Speed = calculateVehicleSpeed(c);
+			c.setCurrent_Speed(calculateVehicleSpeed(c));
 			c.advance(time);		
-		}
-		
+		}	
 		
 		Collections.sort(this.Vehicles); 			
 		
@@ -88,7 +87,7 @@ public abstract class Road extends SimulatedObject implements Comparable<Vehicle
 	
 	public void enter(Vehicle v) throws Exception {
 		
-		if(v.getLocalization()==0 &&v.Current_Speed ==0) {
+		if(v.getLocalization()==0 &&v.getCurrent_Speed() ==0) {
 			this.Vehicles.add(v);
 		}
 		else {
