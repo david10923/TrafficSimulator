@@ -8,13 +8,13 @@ public class NewCityRoadEventBuilder  extends NewRoadEventBuilder{
 
 	NewCityRoadEventBuilder() {
 		super(type);
+		this._type = "new_city_road";
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected Event createTheRoad() {
-		// TODO Auto-generated method stub
-		return null;
+		Event e = new CityRoadEvent();
 	}
 
 }

@@ -15,6 +15,13 @@ public class NewCityRoadEvent  extends NewRoadEvent{
 	NewCityRoadEvent(int time ,String id,String srcJun ,String destJunc,int length,int co2Limit , int maxSpeed , Weather weather ) {
 		super(time);
 		this._time = time;
+		this.id= id; 
+		this.srcJunc = srcJun; 
+		this.destJunc = destJunc;
+		this.length = length; 
+		this.co2Limit = co2Limit; 
+		this.maxSpeed = maxSpeed; 
+		this.weather = weather;
 		
 		
 	}
@@ -22,13 +29,20 @@ public class NewCityRoadEvent  extends NewRoadEvent{
 	@Override
 	public Road createRoadObject() {
 		
-		Road r = new Road();
+		CityRoad r = new CityRoad(this.id, this.srcJunc,this.destJunc, this.maxSpeed, this.co2Limit, this.length, this.weather);
+		
+		return r;
 	}
 
 	@Override
 	void execute(RoadMap map) {
-		// TODO Auto-generated method stub
 		
+		
+		NewJunctionEvent sr = new NewJunctionEvent(this._time,this.srcJunc, null, null,0 ,0);
+		NewJunctionEvent dest = new NewJunctionEvent(this.time,this.destJunc, null, null,0 ,0);
+		
+		
+		map.addRoad(createRoadObject());
 	}
 }
 

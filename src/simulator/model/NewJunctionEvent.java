@@ -1,4 +1,4 @@
-xpackage simulator.model;
+package simulator.model;
 
 import java.util.Map;
 
