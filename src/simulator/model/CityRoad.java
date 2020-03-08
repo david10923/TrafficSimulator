@@ -1,4 +1,6 @@
 package simulator.model;
+import java.util.ArrayList;
+
 import simulator.model.Weather;
 
 public class CityRoad extends Road{
@@ -10,6 +12,8 @@ public class CityRoad extends Road{
 
 	protected CityRoad(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) throws Exception {
 		super(id, srcJunc, destJunc, maxSpeed, contLimit, length, weather);
+		
+		this.Vehicles = new ArrayList<Vehicle>();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -32,7 +36,7 @@ public class CityRoad extends Road{
 	@Override
 	protected int calculateVehicleSpeed(Vehicle v) {
 		
-		return (int) (((CityRoad.auxiliar-v.Pollution)/CityRoad.auxiliar)*this.Current_Max_Speed_limit);
+		return (int) (((CityRoad.auxiliar-v.getPollution())/CityRoad.auxiliar)*this.Current_Max_Speed_limit);
 		
 	}
 

@@ -1,4 +1,6 @@
 package simulator.model;
+import java.util.ArrayList;
+
 import simulator.model.Weather;
 
 public class InterCityRoad extends Road{
@@ -15,6 +17,7 @@ public class InterCityRoad extends Road{
 	
 	protected InterCityRoad(String id ,Junction srcJunc ,Junction destJunc ,int maxSpeed,int contLimit ,int length,Weather weather) throws Exception {
 		super(id,srcJunc,destJunc,maxSpeed,contLimit,length,weather);
+		
 	}
 
 	public void reduceTotalContamination() {
@@ -44,6 +47,7 @@ public class InterCityRoad extends Road{
 		}
 		
 		}
+		this.Vehicles = new ArrayList<Vehicle>();
 		
 	}
 	
@@ -59,7 +63,7 @@ public class InterCityRoad extends Road{
 		if(this.environmental_conditions== Weather.STORM ) {
 			return (int)((int)this.Max_Speed*0.8);
 		}else {
-			return v.Current_Speed = this.Max_Speed;
+			return v.setCurrent_Speed(this.Max_Speed);
 		}	
 		
 	}

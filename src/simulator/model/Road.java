@@ -1,5 +1,6 @@
 package simulator.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -9,9 +10,9 @@ import org.json.JSONObject;
 import Exceptions.InvalidArgumentException;
 
 public abstract class Road extends SimulatedObject {
-	private int Length; 
-	private Junction Destination; 
-	private Junction Source;
+	protected int Length; 
+	protected Junction Destination; 
+	protected Junction Source;
 	protected int Max_Speed; 
 	protected int Current_Max_Speed_limit; 
 	protected int Masive_Pollution;
@@ -79,7 +80,7 @@ public abstract class Road extends SimulatedObject {
 		road.put("speedLimit", this.Max_Speed);
 		road.put("weather", this.environmental_conditions);
 		road.put("co2", this.Global_Pollution);
-		road.put("vehicles", this.Vehicles);
+		road.put("vehicles", reportVehicle());
 		
 		
 		return road;
@@ -152,6 +153,17 @@ public abstract class Road extends SimulatedObject {
 	
 	public int compareTo(Vehicle v1 , Vehicle v2) {		
 		return Integer.valueOf(v1.getLocalization()).compareTo(v2.getLocalization());			
+		
+	}
+	
+	public List<JSONObject> reportVehicle (){
+		List<JSONObject> j = new ArrayList<JSONObject>();
+		
+		for(int i =0 ; i< this.Vehicles.size();i++) {
+			j.add(this.Vehicles.get(i).report());
+		}
+		
+		return j;
 		
 	}
 	

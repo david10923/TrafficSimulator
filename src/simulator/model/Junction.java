@@ -1,54 +1,129 @@
 package simulator.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
 
+import Exceptions.InvalidArgumentException;
+
 public class Junction extends SimulatedObject {
 	private int xCoor; 
 	private int yCoor; 
-	private  List<Road> RoadList;
+	private  List<Road> IncomingRoadList;
 	private Map<Junction,Road> OutgoingRoadList; 
 	private List<List<Vehicle>> QueueList; 
 	private int TrafficLight ; 
 	private int Last_TrafficLight_change;
 	private LightSwitchingStrategy Strategy_of_Change;
 	private  DequeingStrategy Strategy_of_droping_vehicles;
+	private Map<Road,List<Vehicle>> mapOfQueueRoad; 
 	
 	
+	private final int ReedLight=-1;
 	
 	
-	Junction(String id ,LightSwitchingStrategy isStratregy ,DequeingStrategy dqStrategy,int xCoor,int yCoor){
+
+
+	Junction(String id ,LightSwitchingStrategy isStratregy ,DequeingStrategy dqStrategy,int xCoor,int yCoor) throws InvalidArgumentException{
 		super(id);
-		this.setyCoor(xCoor);
-		this.setyCoor(yCoor); 
+		
+		
+		if(isStratregy ==null ||dqStrategy == null )	
+			throw new InvalidArgumentException("There are some null atributes while creating the juction");	
+		
+		else if(xCoor < 0 || yCoor <0 ) {
+			throw new InvalidArgumentException("There are some negatives values while creating");
+		}
+		else {
+
+			this.setyCoor(xCoor);
+			this.setyCoor(yCoor); 
+			
+			this.OutgoingRoadList = new HashMap<Junction,Road>();			
+			this.QueueList = new LinkedList<List<Vehicle>>();
+		//	this.mapOfQueueRoad= new HashMap<Road<List<Vehicle>>();
+			
+		}
+			
+		
 	}
 	
 	
 
 	@Override
 	void advance(int time) {
-		// TODO Auto-generated method stub
+		
+		
+		
+		
 		
 	}
 
 	@Override
 	public JSONObject report() {
-		// TODO Auto-generated method stub
-		return null;
+	
+
+		JSONObject Junction = new JSONObject();
+		
+		
+		Junction.put("id", this._id);
+		
+		if(this.TrafficLight == this.ReedLight) {
+			Junction.put("green", "none");
+		}else {
+			Junction.put("green", this.TrafficLight);
+		}
+		
+		Junction.put("queues", this.QueueList);
+		
+		return Junction;
 	}
 	
-	public void addIncomingRoad(Road r) {
+	 void addIncomingRoad(Road r) throws Exception {
+		int indexOfTheRoad; 	
+		
+		
+		if(r.getDestination() != this) {		
+			throw  new Exception("The road that you specified is not an incoming road");
+		}
+		else {
+
+			this.IncomingRoadList.add(r); 
+			
+			indexOfTheRoad = this.IncomingRoadList.indexOf(r);
+			
+			this.QueueList.add(indexOfTheRoad, this.IncomingRoadList.get(indexOfTheRoad).Vehicles);
+			
+			this.mapOfQueueRoad.put(r, this.IncomingRoadList.get(indexOfTheRoad).Vehicles);
+					
+			
+		}
+	
 		
 	}
 	
-	public void addOutgoingRoad(Road r) {
+	 void addOutgoingRoad(Road r) throws Exception {
 		
-	}
+		if((this.OutgoingRoadList.containsKey(this)) || (r.getSource() != this )) { // si alguna carretera va al cruce  o r es un cruce entrante
+			throw new Exception("The road can not be a OutgoingRoad");		
+		}
+		else {
+			this.OutgoingRoadList.put(this,r);	
+			
+		}
+		
+		
+	}					
 	
 	public void enter(Vehicle v,Road r) {
 		
+		//this.mapOfQueueRoad.get(r).add(v);
+	
 	}
 	
 	public Road roadTo(Junction j) {
@@ -86,14 +161,14 @@ public class Junction extends SimulatedObject {
 
 
 
-	public List<Road> getRoadList() {
-		return RoadList;
+	public List<Road> getIncomingRoadList() {
+		return IncomingRoadList;
 	}
 
 
 
 	public void setRoadList(List<Road> roadList) {
-		RoadList = roadList;
+		IncomingRoadList = roadList;
 	}
 
 
@@ -167,6 +242,22 @@ public class Junction extends SimulatedObject {
 	public void setStrategy_of_droping_vehicles(DequeingStrategy strategy_of_droping_vehicles) {
 		Strategy_of_droping_vehicles = strategy_of_droping_vehicles;
 	}
+	
+	
+	
+	
+	public Map<Road, List<Vehicle>> getMapOfQueueRoad() {
+		return mapOfQueueRoad;
+	}
+
+
+
+	public void setMapOfQueueRoad(Map<Road, List<Vehicle>> mapOfQueueRoad) {
+		this.mapOfQueueRoad = mapOfQueueRoad;
+	}
+
+
+	
 	
 	/*
 	public Road getValue(Junction j) {

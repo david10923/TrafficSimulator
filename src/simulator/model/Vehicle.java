@@ -18,46 +18,73 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 	private List<Junction> Itinerary; 
 	private  int Max_Speed; 
 	private int Current_Speed;
-	
-	
-	
-	public int getMax_Speed() {
-		return Max_Speed;
-	}
-
-	public void setMax_Speed(int max_Speed) {
-		Max_Speed = max_Speed;
-	}
-
-	public int getCurrent_Speed() {
-		return Current_Speed;
-	}
-
-	public void setCurrent_Speed(int current_Speed) {
-		Current_Speed = current_Speed;
-	}
-
 	private VehicleStatus Status;
 	private Road Road; 
 	private  int Localization;
-	public int getLocalization() {
-		return Localization;
-	}
-
-	public void setLocalization(int localization) {
-		Localization = localization;
-	}
-
-	protected int Degree_of_Pollution; //contaminacion del vehiculo en cada paso de la simulacion
-	protected int Pollution; // durante todo el recorrido 
-	protected int Global_distance_traveled;
+	private int Degree_of_Pollution; //contaminacion del vehiculo en cada paso de la simulacion
+	private int Pollution; // durante todo el recorrido 
+	private int Global_distance_traveled;	
 	
-	protected int Last_Junction_index;	
-	//private Junction junction;// no hace falta ya que la carretera tiene de donde viene 
-	protected int ancientLocalization;
+	private int Last_Junction_index;	 
+	private int ancientLocalization;
 	private static int number = 10 ;
 	
-	//¿Hay que añadir el grado de contaminacion?? 
+	
+	
+	
+	
+	public int getDegree_of_Pollution() {
+		return Degree_of_Pollution;
+	}
+
+
+	public void setDegree_of_Pollution(int degree_of_Pollution) {
+		Degree_of_Pollution = degree_of_Pollution;
+	}
+
+
+	public int getPollution() {
+		return Pollution;
+	}
+
+
+	public void setPollution(int pollution) {
+		Pollution = pollution;
+	}
+
+
+	public int getGlobal_distance_traveled() {
+		return Global_distance_traveled;
+	}
+
+
+	public void setGlobal_distance_traveled(int global_distance_traveled) {
+		Global_distance_traveled = global_distance_traveled;
+	}
+
+
+	public int getLast_Junction_index() {
+		return Last_Junction_index;
+	}
+
+
+	public void setLast_Junction_index(int last_Junction_index) {
+		Last_Junction_index = last_Junction_index;
+	}
+
+
+	public int getAncientLocalization() {
+		return ancientLocalization;
+	}
+
+
+	public void setAncientLocalization(int ancientLocalization) {
+		this.ancientLocalization = ancientLocalization;
+	}
+
+
+	
+	//¿Hay que añadir el grado de contaminacion??
 	
 	
 	
@@ -83,6 +110,36 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 			
 		}
 	}
+
+	
+	public int getMax_Speed() {
+		return Max_Speed;
+	}
+
+	public void setMax_Speed(int max_Speed) {
+		Max_Speed = max_Speed;
+	}
+
+	public int getCurrent_Speed() {
+		return Current_Speed;
+	}
+
+	public void setCurrent_Speed(int current_Speed) {
+		Current_Speed = current_Speed;
+	}
+
+	public int getLocalization() {
+		return Localization;
+	}
+
+	public void setLocalization(int localization) {
+		Localization = localization;
+	}
+
+	 
+	
+	
+	
 
 	@Override
 	public void advance(int time)  {
@@ -223,6 +280,21 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 		return Integer.valueOf(this.Localization).compareTo(o.getLocalization());
 	}
 
+	
+	
+	
+	boolean recorreItinerario (Vehicle v) {
+		boolean ok = true; 
+		
+		for (Junction junction : Itinerary) {
+			if(junction.getOutgoingRoadList().isEmpty())
+				ok = false; 
+			}
+		
+		return ok; 
+			
+		}
+	
 	
 	
 	
