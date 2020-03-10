@@ -20,10 +20,10 @@ public class RoundRobinStrategy implements LightSwitchingStrategy {
 		else if (currGreen == -1) {
 			return 0;
 		}
-		else if (/* 3 opcion , no se a que se refiere*/) {
-				
+		else if ((currTime -lastSwitchingTime)< this.timeSlot) {
+			return currGreen;
 		}
-		else {	
+		else {	// mal 
 			return roads.indexOf(roads.get(currGreen));
 		}
 		

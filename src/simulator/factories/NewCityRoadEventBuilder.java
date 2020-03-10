@@ -1,20 +1,31 @@
 package simulator.factories;
 
+import javax.xml.crypto.Data;
+
 import simulator.model.Event;
+import simulator.model.NewCityRoadEvent;
+
 
 public class NewCityRoadEventBuilder  extends NewRoadEventBuilder{
 
-	private static String type;
+	private static String type="new_city_road";
 
-	NewCityRoadEventBuilder() {
+
+
+	public NewCityRoadEventBuilder() {
 		super(type);
-		this._type = "new_city_road";
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected Event createTheRoad() {
-		Event e = new CityRoadEvent();
+		
+		Event e = new NewCityRoadEvent(this.time,this.id,this.src,this.dest,this.lenght,this.co2limit,this.maxspeed,this.weather);
+		
+		
+		return e;
 	}
+	
+	
 
 }

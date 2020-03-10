@@ -1,5 +1,7 @@
 package simulator.model;
 
+import Exceptions.InvalidArgumentException;
+
 public class NewCityRoadEvent  extends NewRoadEvent{
 	
 	private int time; 
@@ -10,9 +12,13 @@ public class NewCityRoadEvent  extends NewRoadEvent{
 	private int co2Limit;
 	private int maxSpeed; 
 	private Weather weather ;
+	
+	
+	private Junction src ;
+	private Junction dest; 
 
 	
-	NewCityRoadEvent(int time ,String id,String srcJun ,String destJunc,int length,int co2Limit , int maxSpeed , Weather weather ) {
+	public NewCityRoadEvent(int time ,String id,String srcJun ,String destJunc,int length,int co2Limit , int maxSpeed , Weather weather ) {
 		super(time);
 		this._time = time;
 		this.id= id; 
@@ -27,33 +33,39 @@ public class NewCityRoadEvent  extends NewRoadEvent{
 	}
 
 	@Override
+	
 	public Road createRoadObject() {
+			
+		Road r = null;
 		
-		CityRoad r = new CityRoad(this.id, this.srcJunc,this.destJunc, this.maxSpeed, this.co2Limit, this.length, this.weather);
+			try {
+				 r= new InterCityRoad(this.id, this.src,this.dest, this.maxSpeed, this.co2Limit, this.length, this.weather);
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.getMessage();
+			}
 		
+			
 		return r;
 	}
+	
 
 	@Override
 	void execute(RoadMap map) {
 		
 		
-		NewJunctionEvent sr = new NewJunctionEvent(this._time,this.srcJunc, null, null,0 ,0);
-		NewJunctionEvent dest = new NewJunctionEvent(this.time,this.destJunc, null, null,0 ,0);
 		
+		this.src =map.getIdJunctionMap().get(this.srcJunc);
+		this.dest = map.getIdJunctionMap().get(this.destJunc);
 		
-		map.addRoad(createRoadObject());
+		try {
+			map.addRoad(createRoadObject());
+		} catch (InvalidArgumentException e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+		}
 	}
-}
-
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -120,5 +132,6 @@ public class NewCityRoadEvent  extends NewRoadEvent{
 	public void setWeather(Weather weather) {
 		this.weather = weather;
 	}
+}
 
 	

@@ -45,7 +45,8 @@ public abstract class Road extends SimulatedObject {
 			this.environmental_conditions = weather;
 			this.Destination = destJunc; 
 			this.Source= srcJunc; 
-			
+			this.Current_Max_Speed_limit = this.Max_Speed;
+						
 		}
 	}
 			
@@ -88,7 +89,7 @@ public abstract class Road extends SimulatedObject {
 	
 	public void enter(Vehicle v) throws Exception {
 		
-		if(v.getLocalization()==0 &&v.getCurrent_Speed() ==0) {
+		if(v.getLocalization()==0 && v.getCurrent_Speed() ==0) {
 			this.Vehicles.add(v);
 		}
 		else {
@@ -116,13 +117,8 @@ public abstract class Road extends SimulatedObject {
 		if(c<0) 
 			throw new InvalidArgumentException("The pollution is less than cero");
 		else
-			this.Global_Pollution= c ;
+			this.Global_Pollution += c ;
 			
-		
-		
-	
-		this.Global_Pollution += c ; 
-		
 	}
 	
 	

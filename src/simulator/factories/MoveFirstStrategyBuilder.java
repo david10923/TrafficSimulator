@@ -7,11 +7,10 @@ import simulator.model.MoveFirstStrategy;
 
 public class MoveFirstStrategyBuilder  extends Builder{
 
-	private static String type;
+	private static String type = "move_first_dqs";
 
-	MoveFirstStrategyBuilder() {
+	public MoveFirstStrategyBuilder(){
 		super(type);
-		this._type = "move_first_dqs";
 		// TODO Auto-generated constructor stub
 	}
 

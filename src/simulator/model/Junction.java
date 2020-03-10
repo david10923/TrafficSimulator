@@ -33,7 +33,7 @@ public class Junction extends SimulatedObject {
 		super(id);
 		
 		
-		if(isStratregy ==null ||dqStrategy == null )	
+		if(isStratregy ==null || dqStrategy == null )	
 			throw new InvalidArgumentException("There are some null atributes while creating the juction");	
 		
 		else if(xCoor < 0 || yCoor <0 ) {
@@ -44,9 +44,10 @@ public class Junction extends SimulatedObject {
 			this.setyCoor(xCoor);
 			this.setyCoor(yCoor); 
 			
-			this.OutgoingRoadList = new HashMap<Junction,Road>();			
-			this.QueueList = new LinkedList<List<Vehicle>>();
-		//	this.mapOfQueueRoad= new HashMap<Road<List<Vehicle>>();
+			this.OutgoingRoadList = new HashMap<Junction,Road>();
+			//this.QueueList = new LinkedList<List<Vehicle>>();
+			
+			//this.mapOfQueueRoad= new HashMap<Road,List<Vehicle>>();
 			
 		}
 			
@@ -57,10 +58,36 @@ public class Junction extends SimulatedObject {
 
 	@Override
 	void advance(int time) {
+		int index;
+		
+		/*
+		index = this.Strategy_of_Change.chooseNextGreen(this.IncomingRoadList, this.QueueList, this.TrafficLight, 
+				this.Last_TrafficLight_change, time);		
+		*/
+		
+		if(this.TrafficLight ==-1) {
+			List<Vehicle> q = this.QueueList.get(this.TrafficLight); 	
+			List<Vehicle> list = new ArrayList<Vehicle>();
+			
+			list = this.Strategy_of_droping_vehicles.dequeue(q);
+			for(int i = 0;i < list.size();i++) {
+				try {
+					list.get(i).moveToNextRoad();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				q.remove(list.get(i));
+				
+			}
+		}
+		
+		int nextGreen = this.Strategy_of_Change.chooseNextGreen(this.IncomingRoadList, this.QueueList,
+				this.TrafficLight, this.Last_TrafficLight_change, time);
 		
 		
 		
-		
+	
 		
 	}
 
@@ -79,10 +106,16 @@ public class Junction extends SimulatedObject {
 			Junction.put("green", this.TrafficLight);
 		}
 		
-		Junction.put("queues", this.QueueList);
+		Junction.put("queues", this);
+		
+		
+		//reportRoad();
+		//reportVehicles();
 		
 		return Junction;
 	}
+	
+	
 	
 	 void addIncomingRoad(Road r) throws Exception {
 		int indexOfTheRoad; 	
@@ -94,6 +127,10 @@ public class Junction extends SimulatedObject {
 		else {
 
 			this.IncomingRoadList.add(r); 
+			
+			this.QueueList = new LinkedList<List<Vehicle>>();	
+			
+			this.mapOfQueueRoad= new HashMap<Road,List<Vehicle>>();
 			
 			indexOfTheRoad = this.IncomingRoadList.indexOf(r);
 			
@@ -122,8 +159,30 @@ public class Junction extends SimulatedObject {
 	
 	public void enter(Vehicle v,Road r) {
 		
-		//this.mapOfQueueRoad.get(r).add(v);
-	
+		try {
+			r.enter(v);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*
+		List<Vehicle> lista;
+		int i=0;
+		boolean ok = false;
+		
+		lista = this.mapOfQueueRoad.get(r);
+		
+		while(i < this.QueueList.size() && ok) {
+			if(lista.equals(this.QueueList.get(i))) {
+				ok = true;
+			}
+		}		
+		
+		this.QueueList.add(i, lista);	
+		
+		this.mapOfQueueRoad.get(r).add(v);
+		*/
+		
 	}
 	
 	public Road roadTo(Junction j) {
@@ -264,6 +323,30 @@ public class Junction extends SimulatedObject {
 		return this.OutgoingRoadList.get(j);
 	}
 	*/
+	
+	
+	public List<JSONObject> reportRoads () {
+		 List<JSONObject> jlist = new ArrayList<JSONObject>();
+		 
+		 for(int i =0 ; i < this.IncomingRoadList.size();i++) {
+			 jlist.add(this.IncomingRoadList.get(i).report());
+		 }
+		
+		return jlist; 
+		
+	}
+	
+	public List<JSONObject> reportVehicles (Road r) {
+		 List<JSONObject> jlist = new ArrayList<JSONObject>();
+		 
+		 for(int i =0 ; i < this.QueueList.size();i++) {
+			 jlist.add(this.mapOfQueueRoad.get(r).get(i).report());
+		 }
+		
+		return jlist; 
+		
+	}
+	
 	
 	
 }

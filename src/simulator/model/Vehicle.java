@@ -27,7 +27,9 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 	
 	private int Last_Junction_index;	 
 	private int ancientLocalization;
-	private static int number = 10 ;
+	private final int number = 10 ;
+	private final int CERO = 0;
+	private final int UNO = 1;
 	
 	
 	
@@ -88,11 +90,14 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 	
 	
 	
-	protected Vehicle(String id,int maxSpeed ,int contClass,List<Junction> itinerary) throws Exception{
+	 Vehicle(String id,int maxSpeed ,int contClass,List<Junction> itinerary) throws Exception{
 		super(id);
 		
 		if(maxSpeed < 0 ) {
 			throw new InvalidArgumentException("Incorrect speed,Max Speed of the vehicle is less than 0");
+		}
+		else if (contClass<0 || contClass >10) {
+			throw new InvalidArgumentException("Incorrect contClass value");
 		}
 		else if(itinerary.size()<2) {
 			throw new InvalidArgumentException("Incorrect , the cont of the list is less than 2");
@@ -102,11 +107,13 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 			this.Max_Speed = maxSpeed;
 			this.Itinerary = Collections.unmodifiableList(new ArrayList<>(itinerary));
 			
-		
 			
-			setContaminationClass(contClass);
+			this.ancientLocalization = 0;
+			this.Localization=0;
+			this.Degree_of_Pollution = contClass;
+			this.Pollution = contClass;
 			this.Last_Junction_index=0;
-			this.Status= this.Status.PENDING;
+			this.Status= VehicleStatus.PENDING;
 			
 		}
 	}
@@ -145,7 +152,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 	public void advance(int time)  {
 		int Posible_Pollution = 0;
 		
-		if(Status == VehicleStatus.TRAVELING) {// Donde inicializar la localizacion		
+		if(this.Status == VehicleStatus.TRAVELING) {// Donde inicializar la localizacion		
 			//a
 			this.Localization = Math.min(this.Localization+this.Current_Speed, this.Road.getLength());
 			//b
@@ -162,7 +169,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 			if(this.Localization == this.Road.getLength()) {
 				
 				this.Itinerary.get(this.Last_Junction_index).enter(this, this.Road);
-				this.Status = Status.WAITING;
+				this.Status = VehicleStatus.WAITING;
 				
 				
 				
@@ -218,28 +225,35 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 	 void moveToNextRoad() throws Exception {
 		Junction actualJunc , nextJunc;
 		
-		
-		
 		this.Road.exit(this);
 		
-		if(this.Status == Status.PENDING) { 
+		if(this.Status == VehicleStatus.PENDING) { 
 			
-			actualJunc = this.Itinerary.get(this.Last_Junction_index);
+			actualJunc = this.Itinerary.get(CERO);
 			
-			nextJunc=this.Itinerary.get(this.Last_Junction_index +1); 
+			nextJunc=this.Itinerary.get(UNO); 
 			
-			actualJunc.roadTo(nextJunc);
+			this.Road = actualJunc.roadTo(nextJunc);
 			
 		}else {	
 			
 			actualJunc= this.Itinerary.get(this.Last_Junction_index); 
 			
-			nextJunc=this.Itinerary.get(this.Last_Junction_index +1); 
+			nextJunc=this.Itinerary.get(this.Last_Junction_index +1); 			
 			
 			this.Road=actualJunc.roadTo(nextJunc);	
-
 			
-			this.Road.enter(this);
+			if(this.Road != null) {
+				this.Road.enter(this);
+				this.Localization = 0;
+			}
+			
+			if(this.Status != VehicleStatus.PENDING || this.Status != VehicleStatus.WAITING) {
+				throw new Exception("The state of the vehicle is false");
+			}
+				
+			
+			
 			// falta ponerle en la localizacion 0 
 			
 		
@@ -294,6 +308,11 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 		return ok; 
 			
 		}
+
+
+	public int getCERO() {
+		return CERO;
+	}
 	
 	
 	

@@ -126,19 +126,6 @@ public class RoadMap {
 
 
 	
-	
-	public Junction getJunction(String id) {
-		return null; 
-	}
-	
-	public Road RoadGetRoad(String id) {
-		return null; 
-	}
-
-	public Vehicle getVehicle(String id) {
-		return null; 
-	}
-
 
 	public List<Junction> getJunctionList() {
 		return JunctionList;

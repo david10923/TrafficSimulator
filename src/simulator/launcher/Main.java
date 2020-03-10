@@ -1,6 +1,15 @@
 package simulator.launcher;
 
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -9,12 +18,15 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import simulator.factories.Factory;
-import simulator.model.Event;
+import Exceptions.InvalidArgumentException;
+import simulator.control.Controller;
+import simulator.factories.*;
+import simulator.model.*;
 
 public class Main {
 
 	private final static Integer _timeLimitDefaultValue = 10;
+	private static Integer _timeLimit = null;
 	private static String _inFile = null;
 	private static String _outFile = null;
 	private static Factory<Event> _eventsFactory = null;
@@ -84,12 +96,48 @@ public class Main {
 
 	private static void initFactories() {
 
-		// TODO complete this method to initialize _eventsFactory
-
+		ArrayList<Builder<LightSwitchingStrategy>> lsbs = new ArrayList<>();
+		lsbs.add(new RoundRobinStrategyBuilder());
+		lsbs.add(new MostCrowdedStrategyBuilder());
+		Factory<LightSwitchingStrategy> lssFactory = new BuilderBasedFactory<>(lsbs);
+		
+		ArrayList<Builder<DequeingStrategy>> dqbs = new ArrayList<>();
+		dqbs.add(new MoveFirstStrategyBuilder());
+		dqbs.add(new MoveAllStrategyBuilder());
+		Factory<DequeingStrategy> dqsFactory = new BuilderBasedFactory<>(dqbs);
+		
+		List<Builder<Event>> eventBuilders = new ArrayList<>();
+		eventBuilders.add(new NewJunctionEventBuilder(lssFactory, dqsFactory));
+		eventBuilders.add(new NewCityRoadEventBuilder());
+		eventBuilders.add(new NewJunctionEventBuilder(lssFactory, dqsFactory));
+		eventBuilders.add(new NewInterCityRoadEventBuilder());
+		eventBuilders.add(new MostCrowdedStrategyBuilder());
+		// añadir los demas enventos 
+		
+		
+		
+		
+		_eventsFactory = new BuilderBasedFactory<>(eventBuilders);
 	}
 
 	private static void startBatchMode() throws IOException {
-		// TODO complete this method to start the simulation
+		
+		InputStream in = new FileInputStream(new File(_inFile));
+		OutputStream out = _outFile == null ?
+		System.out : new FileOutputStream(new File(_outFile));
+		TrafficSimulator sim = new TrafficSimulator();
+		Controller ctrl;
+		try {
+			ctrl = new Controller(sim, _eventsFactory);
+			ctrl.loadEvents(in);
+			ctrl.run(_timeLimit, out);
+		} catch (InvalidArgumentException e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+		}
+		
+		in.close();
+		System.out.println("Done!");
 	}
 
 	private static void start(String[] args) throws IOException {

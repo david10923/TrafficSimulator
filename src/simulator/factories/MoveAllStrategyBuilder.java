@@ -8,11 +8,10 @@ import simulator.model.MoveFirstStrategy;
 
 public class MoveAllStrategyBuilder extends Builder{	
 
-	private static String type;
+	private static String type ="most_all_dqs";
 
-	MoveAllStrategyBuilder() {
+	public MoveAllStrategyBuilder() {
 		super(type);
-		this._type ="most_all_dqs";
 		// TODO Auto-generated constructor stub
 	}
 

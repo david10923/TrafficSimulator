@@ -15,9 +15,12 @@ public class NewInterCityRoadEvent extends NewRoadEvent {
 	private Weather weather ;
 	
 	
+	private Junction src; 
+	private Junction dest; 
 	
-	
-	NewInterCityRoadEvent(int time ,String id,String srcJun ,String destJunc,int length,int co2Limit , int maxSpeed , Weather weather ) {
+
+
+	public NewInterCityRoadEvent(int time ,String id,String srcJun ,String destJunc,int length,int co2Limit , int maxSpeed , Weather weather ) {
 		super(time);
 		this._time = time; 
 		this.id = id; 
@@ -34,18 +37,34 @@ public class NewInterCityRoadEvent extends NewRoadEvent {
 
 	@Override
 	public Road createRoadObject() {
-		Road r;
+		Road r = null;
 		
-		try {		 
-			
-			r = new InterCityRoad(this.id,this.srcJunc,this.destJunc,this.maxSpeed,this.co2Limit,this.length,this.weather);
-		}
+			try {
+				r = new InterCityRoad(this.id,this.src,this.dest,this.maxSpeed,this.co2Limit,this.length,this.weather);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.getMessage();
+			}
+		
 		 
-		
+		return r;
 	}
 
 	@Override
 	void execute(RoadMap map) {
+		
+
+		this.src =map.getIdJunctionMap().get(this.srcJunc);
+		this.dest = map.getIdJunctionMap().get(this.destJunc);
+		
+		try {
+			map.addRoad(createRoadObject());
+		} catch (InvalidArgumentException e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+		}
+		
+		
 		
 		
 	}
@@ -115,6 +134,23 @@ public class NewInterCityRoadEvent extends NewRoadEvent {
 
 	public void setWeather(Weather weather) {
 		this.weather = weather;
+	}
+	
+	
+	public Junction getSrc() {
+		return src;
+	}
+
+	public void setSrc(Junction src) {
+		this.src = src;
+	}
+
+	public Junction getDest() {
+		return dest;
+	}
+
+	public void setDest(Junction dest) {
+		this.dest = dest;
 	}
 
 
