@@ -91,9 +91,11 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 				this.Itinerary.get(this.Last_Junction_index).enter(this);
 				this.Status = VehicleStatus.WAITING;
 				this.Current_Speed = CERO;
+				this.Last_Junction_index++;
 				
 			}
 			
+		
 		}
 		
 		
