@@ -1,5 +1,6 @@
 package simulator.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewVehicleEvent extends Event{
@@ -24,13 +25,12 @@ public class NewVehicleEvent extends Event{
 	void execute(RoadMap map) {
 		String id;
 		Junction j;
-		List<Junction> junctionItinerary = null;
-		
+		List<Junction> junctionItinerary = new ArrayList<>();
 		
 		
 		for(int i = 0;i< this.Itinerary.size();i++){			
 			id = this.Itinerary.get(i);
-			j= map.getIdJunctionMap().get(id);
+			j = map.getJunction(id);
 			junctionItinerary.add(i, j);	
 			
 		}		

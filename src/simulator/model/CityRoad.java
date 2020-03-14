@@ -29,7 +29,7 @@ public class CityRoad extends Road{
 
 	@Override
 	protected void updateSpeedLimit() {
-		// TODO Auto-generated method stub
+		this.Current_Max_Speed_limit = this.Max_Speed;
 		
 	}
 

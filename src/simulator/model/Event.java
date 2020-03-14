@@ -1,5 +1,7 @@
 package simulator.model;
 
+import Exceptions.InvalidArgumentException;
+
 public abstract class Event implements Comparable<Event> {
 
 	protected int _time;
@@ -20,5 +22,5 @@ public abstract class Event implements Comparable<Event> {
 		return Integer.valueOf(this.getTime()).compareTo(o.getTime());
 	}
 
-	abstract void execute(RoadMap map);
+	abstract void execute(RoadMap map) throws InvalidArgumentException;
 }

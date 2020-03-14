@@ -33,63 +33,6 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 	
 	
 	
-	
-	
-	public int getDegree_of_Pollution() {
-		return Degree_of_Pollution;
-	}
-
-
-	public void setDegree_of_Pollution(int degree_of_Pollution) {
-		Degree_of_Pollution = degree_of_Pollution;
-	}
-
-
-	public int getPollution() {
-		return Pollution;
-	}
-
-
-	public void setPollution(int pollution) {
-		Pollution = pollution;
-	}
-
-
-	public int getGlobal_distance_traveled() {
-		return Global_distance_traveled;
-	}
-
-
-	public void setGlobal_distance_traveled(int global_distance_traveled) {
-		Global_distance_traveled = global_distance_traveled;
-	}
-
-
-	public int getLast_Junction_index() {
-		return Last_Junction_index;
-	}
-
-
-	public void setLast_Junction_index(int last_Junction_index) {
-		Last_Junction_index = last_Junction_index;
-	}
-
-
-	public int getAncientLocalization() {
-		return ancientLocalization;
-	}
-
-
-	public void setAncientLocalization(int ancientLocalization) {
-		this.ancientLocalization = ancientLocalization;
-	}
-
-
-	
-	//¿Hay que añadir el grado de contaminacion??
-	
-	
-	
 	 Vehicle(String id,int maxSpeed ,int contClass,List<Junction> itinerary) throws Exception{
 		super(id);
 		
@@ -118,30 +61,6 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 		}
 	}
 
-	
-	public int getMax_Speed() {
-		return Max_Speed;
-	}
-
-	public void setMax_Speed(int max_Speed) {
-		Max_Speed = max_Speed;
-	}
-
-	public int getCurrent_Speed() {
-		return Current_Speed;
-	}
-
-	public void setCurrent_Speed(int current_Speed) {
-		Current_Speed = current_Speed;
-	}
-
-	public int getLocalization() {
-		return Localization;
-	}
-
-	public void setLocalization(int localization) {
-		Localization = localization;
-	}
 
 	 
 	
@@ -154,6 +73,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 		
 		if(this.Status == VehicleStatus.TRAVELING) {// Donde inicializar la localizacion		
 			//a
+			this.ancientLocalization = this.Localization;
 			this.Localization = Math.min(this.Localization+this.Current_Speed, this.Road.getLength());
 			//b
 			this.Degree_of_Pollution= ((this.Localization-this.ancientLocalization)*this.Pollution/number);
@@ -168,13 +88,9 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 			//c 
 			if(this.Localization == this.Road.getLength()) {
 				
-				this.Itinerary.get(this.Last_Junction_index).enter(this, this.Road);
+				this.Itinerary.get(this.Last_Junction_index).enter(this);
 				this.Status = VehicleStatus.WAITING;
-				
-				
-				
-		//	junction.getOutgoingRoadList();
-		//	this.Road = junction.getValue(this.junction);
+				this.Current_Speed = CERO;
 				
 			}
 			
@@ -227,7 +143,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 		
 		this.Road.exit(this);
 		
-		if(this.Status == VehicleStatus.PENDING) { 
+		if(this.Status == VehicleStatus.PENDING && this.Current_Speed == 0) { 
 			
 			actualJunc = this.Itinerary.get(CERO);
 			
@@ -245,18 +161,13 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 			
 			if(this.Road != null) {
 				this.Road.enter(this);
-				this.Localization = 0;
+				this.Localization =CERO;
 			}
 			
 			if(this.Status != VehicleStatus.PENDING || this.Status != VehicleStatus.WAITING) {
 				throw new Exception("The state of the vehicle is false");
 			}
-				
 			
-			
-			// falta ponerle en la localizacion 0 
-			
-		
 		}
 		
 		
@@ -288,6 +199,84 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 	public void setStatus(VehicleStatus status) {
 		Status = status;
 	}
+	
+	
+	
+	public int getDegree_of_Pollution() {
+		return Degree_of_Pollution;
+	}
+
+
+	public void setDegree_of_Pollution(int degree_of_Pollution) {
+		Degree_of_Pollution = degree_of_Pollution;
+	}
+
+
+	public int getPollution() {
+		return Pollution;
+	}
+
+
+	public void setPollution(int pollution) {
+		Pollution = pollution;
+	}
+
+
+	public int getGlobal_distance_traveled() {
+		return Global_distance_traveled;
+	}
+
+
+	public void setGlobal_distance_traveled(int global_distance_traveled) {
+		Global_distance_traveled = global_distance_traveled;
+	}
+
+
+	public int getLast_Junction_index() {
+		return Last_Junction_index;
+	}
+
+
+	public void setLast_Junction_index(int last_Junction_index) {
+		Last_Junction_index = last_Junction_index;
+	}
+
+
+	public int getAncientLocalization() {
+		return ancientLocalization;
+	}
+
+
+	public void setAncientLocalization(int ancientLocalization) {
+		this.ancientLocalization = ancientLocalization;
+	}
+
+	
+	
+	public int getMax_Speed() {
+		return Max_Speed;
+	}
+
+	public void setMax_Speed(int max_Speed) {
+		Max_Speed = max_Speed;
+	}
+
+	public int getCurrent_Speed() {
+		return Current_Speed;
+	}
+
+	public void setCurrent_Speed(int current_Speed) {
+		Current_Speed = current_Speed;
+	}
+
+	public int getLocalization() {
+		return Localization;
+	}
+
+	public void setLocalization(int localization) {
+		Localization = localization;
+	}
+
 
 	@Override
 	public int compareTo(Vehicle o) {

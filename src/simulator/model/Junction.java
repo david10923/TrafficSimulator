@@ -157,31 +157,30 @@ public class Junction extends SimulatedObject {
 		
 	}					
 	
-	public void enter(Vehicle v,Road r) {
-		
-		try {
-			r.enter(v);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		/*
-		List<Vehicle> lista;
-		int i=0;
+	public void enter(Vehicle v) { 
 		boolean ok = false;
+		int i = 0;
 		
-		lista = this.mapOfQueueRoad.get(r);
 		
-		while(i < this.QueueList.size() && ok) {
-			if(lista.equals(this.QueueList.get(i))) {
+		List<Vehicle> lista =this.mapOfQueueRoad.get(v.getRoad());
+		
+		while(i< this.QueueList.size() && ok) {
+			if(lista == this.QueueList.get(i)) {
 				ok = true;
 			}
-		}		
+		}
 		
-		this.QueueList.add(i, lista);	
+		lista.add(v);
+		try {
+			v.getRoad().enter(v);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+		}
 		
-		this.mapOfQueueRoad.get(r).add(v);
-		*/
+		this.QueueList.set(i, lista);
+		this.mapOfQueueRoad.put(v.getRoad(), lista);
+		
 		
 	}
 	

@@ -17,7 +17,7 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
 	@Override
 	public int chooseNextGreen(List<Road> roads, List<List<Vehicle>> qs, int currGreen, int lastSwitchingTime,
 			int currTime) {
-		int tamActual , tamMayor=-1 , carreteraMayor=0;
+		int tamActual , tamMayor=-1 , colaMasLarga=0;
 		
 		//1
 		if(roads.isEmpty()) {
@@ -31,7 +31,7 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
 				
 				if(tamActual > tamMayor){
 					tamMayor = tamActual;
-					carreteraMayor = i;
+					colaMasLarga = i;
 				}
 				
 			}
@@ -43,12 +43,25 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
 		
 		
 		//4
-		int actual= currGreen;
+		else {
+			colaMasLarga = ((currGreen +1) % roads.size()); 
+			int aux = colaMasLarga;
+			
+			for(int i = colaMasLarga;i< qs.size();i++ ) {
+				if(qs.get(i).size() > qs.get(colaMasLarga).size()) {
+					colaMasLarga = qs.get(i).size();
+				}
+			}
+			for(int j =0 ; j < aux;j++) {
+				if(qs.get(j).size() > qs.get(colaMasLarga).size()) {
+					colaMasLarga = qs.get(j).size();
+				}
+			}
+			
+			
+		}
 		
-		
-		
-		
-		return 0;
+		return colaMasLarga;
 	}
 	
 	

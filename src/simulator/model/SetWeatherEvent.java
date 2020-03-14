@@ -8,7 +8,7 @@ import simulator.misc.Pair;
 public class SetWeatherEvent extends Event {
 	
 	private List<Pair<String,Weather>> ws;
-
+	
 	
 	public SetWeatherEvent(int time,List<Pair<String,Weather>> ws) throws InvalidArgumentException {
 		super(time);
@@ -23,12 +23,17 @@ public class SetWeatherEvent extends Event {
 	}
 
 	@Override
-	void execute(RoadMap map) {
+	void execute(RoadMap map) throws InvalidArgumentException {
 		String id ; 
 		
 		for(int i =0 ; i< this.ws.size();i++) {
-			id = this.ws.get(i).getFirst() ; // t da el string de la carretera
+			if(	map.getRoad(this.ws.get(i).getFirst()) != null) { // si esta en la lista
+				id = this.ws.get(i).getFirst() ; // t da el string de la carretera
 				
+			}
+			else {
+				throw new InvalidArgumentException("The String does not exist in the list");
+			}
 			
 		}
 		

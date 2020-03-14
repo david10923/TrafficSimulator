@@ -111,7 +111,11 @@ public class Main {
 		eventBuilders.add(new NewCityRoadEventBuilder());
 		eventBuilders.add(new NewJunctionEventBuilder(lssFactory, dqsFactory));
 		eventBuilders.add(new NewInterCityRoadEventBuilder());
-		eventBuilders.add(new MostCrowdedStrategyBuilder());
+		eventBuilders.add(new NewVehicleEventBuilder());
+		eventBuilders.add(new SetContClassEventBuilder());
+		eventBuilders.add(new SetWeatherEventBuilder());
+		
+		
 		// añadir los demas enventos 
 		
 		

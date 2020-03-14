@@ -1,20 +1,62 @@
 package simulator.factories;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class SetWeatherEventBuilder  extends Builder{
+import Exceptions.InvalidArgumentException;
+import simulator.misc.Pair;
+import simulator.model.Event;
+import simulator.model.SetWeatherEvent;
+import simulator.model.Weather;
 
-	private static String type;
+public class SetWeatherEventBuilder  extends Builder<Event>{
 
-	SetWeatherEventBuilder() {
+	private static String type = "set_weather";
+	
+	private int time ; 
+	private List<Pair<String,Weather>> ws;
+	
+	private JSONArray JsonArray ;
+	
+
+
+	public SetWeatherEventBuilder() {
 		super(type);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
-	protected Object createTheInstance(JSONObject data) {
-		// TODO Auto-generated method stub
-		return null;
+	protected Event createTheInstance(JSONObject data) {
+		
+		Event e = null ;
+		
+		if(data.has("time") && data.has("info")) {
+			
+			this.time = data.getInt("time");
+			
+			JsonArray  = data.getJSONArray("info");
+			
+			this.ws = new ArrayList<Pair<String,Weather>>();
+			
+			for(int i= 0 ; i< JsonArray.length();i++) {
+				this.ws.add(new Pair<String,Weather>(JsonArray.getString(i),JsonArray.getEnum(Weather, i));
+			}	
+			
+			 try {
+				e = new SetWeatherEvent(this.time ,this.ws);
+			} catch (InvalidArgumentException e1) {
+				// TODO Auto-generated catch block
+				e1.getMessage();
+			}
+			
+		}
+		
+		
+		
+		
 	}
 
 }

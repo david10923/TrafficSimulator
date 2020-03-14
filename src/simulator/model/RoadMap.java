@@ -96,7 +96,65 @@ public class RoadMap {
 		}
 	}
 	
+	public Vehicle getVehicle(String id) {
+		
+		boolean ok = false;
+		int i = 0;
+		while(i < this.VehicleList.size() && ok) {
+			if(this.VehicleList.get(i)._id.equals(id)) {
+				ok =true;
+			}
+			i++;
+		}
+		
+		if(ok) {
+			return this.VehicleList.get(i);
+		}
+		else {
+			return null;
+		}
+		
+		
+	}
 	
+	
+	public Road getRoad(String id ) {
+		boolean ok = false;
+		int i = 0;
+		while(i < this.RoadList.size() && ok) {
+			if(this.RoadList.get(i)._id.equals(id)) {
+				ok =true;
+			}
+			i++;
+		}
+		
+		if(ok) {
+			return this.RoadList.get(i);
+		}
+		else {
+			return null;
+		}
+		
+	}
+	
+	public Junction getJunction(String id ) {
+		boolean ok = false;
+		int i = 0;
+		while(i < this.JunctionList.size() && ok) {
+			if(this.JunctionList.get(i)._id.equals(id)) {
+				ok =true;
+			}
+			i++;
+		}
+		
+		if(ok) {
+			return this.JunctionList.get(i);
+		}
+		else {
+			return null;
+		}
+		
+	}
 	
 	
 	
@@ -158,7 +216,15 @@ public class RoadMap {
 	
 	protected void reset() {
 		
+		this.IdJunctionMap = null;
+		this.IdRoadMap = null;
+		this.IdVehicleMap = null;
+		this.JunctionList = null; 
+		this.RoadList = null; 
+		this.VehicleList = null;
 	}
+	
+	
 	
 	public JSONObject report() {
 		

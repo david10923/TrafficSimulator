@@ -31,8 +31,7 @@ public class NewJunctionEvent extends Event {
 		 
 		try {
 			Junction j= new Junction(this.id,this.lightStrategy,this.dqStrategy,this.xCoor,this.yCoor);
-			map.addJunction(j);			
-			map.getIdJunctionMap().put(this.id, j);
+			map.addJunction(j);		
 		} catch (InvalidArgumentException e) {			
 			e.getMessage();
 		}

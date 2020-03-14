@@ -54,10 +54,8 @@ public class NewCityRoadEvent  extends NewRoadEvent{
 	@Override
 	void execute(RoadMap map) {
 		
-		
-		
-		this.src =map.getIdJunctionMap().get(this.srcJunc);
-		this.dest = map.getIdJunctionMap().get(this.destJunc);
+		this.src = map.getJunction(this.srcJunc);
+		this.dest = map.getJunction(this.destJunc);		
 		
 		try {
 			map.addRoad(createRoadObject());
