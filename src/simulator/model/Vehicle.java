@@ -143,35 +143,57 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 	 void moveToNextRoad() throws Exception {
 		Junction actualJunc , nextJunc;
 		
-		this.Road.exit(this);
+		if(this.Status != VehicleStatus.PENDING || this.Status != VehicleStatus.WAITING) {
+			throw new Exception("The state of the vehicle is false");
+		}
 		
-		if(this.Status == VehicleStatus.PENDING && this.Current_Speed == 0) { 
+		if(this.Last_Junction_index +1 == this.Itinerary.size()) {
 			
-			actualJunc = this.Itinerary.get(CERO);
+			this.Road.exit(this);
+			this.Status = VehicleStatus.ARRIVED;
 			
-			nextJunc=this.Itinerary.get(UNO); 
 			
-			this.Road = actualJunc.roadTo(nextJunc);
-			
-		}else {	
-			
-			actualJunc= this.Itinerary.get(this.Last_Junction_index); 
-			
-			nextJunc=this.Itinerary.get(this.Last_Junction_index +1); 			
-			
-			this.Road=actualJunc.roadTo(nextJunc);	
-			
-			if(this.Road != null) {
-				this.Road.enter(this);
-				this.Localization =CERO;
+		}else {
+
+			if(this.Status == VehicleStatus.PENDING ) { 
+				
+				actualJunc = this.Itinerary.get(CERO);
+				
+				nextJunc=this.Itinerary.get(UNO); 
+				
+				this.Road = actualJunc.roadTo(nextJunc);
+				
 			}
-			
-			if(this.Status != VehicleStatus.PENDING || this.Status != VehicleStatus.WAITING) {
-				throw new Exception("The state of the vehicle is false");
+			else {	
+				
+				
+				this.Road.exit(this);
+				
+				actualJunc= this.Itinerary.get(this.Last_Junction_index); 
+				
+				nextJunc=this.Itinerary.get(this.Last_Junction_index +1); 			
+				
+				this.Road=actualJunc.roadTo(nextJunc);	
+				
+				if(this.Road != null) {
+					try {
+						this.Road.enter(this);
+					}
+					catch(Exception e ) {
+						e.getMessage();
+					}
+					
+					this.Localization =CERO;
+					this.Status = VehicleStatus.TRAVELING;
+					
+					
+				}
 			}
 			
 		}
 		
+		
+			
 		
 	}
 

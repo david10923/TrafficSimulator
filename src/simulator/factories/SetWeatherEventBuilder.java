@@ -42,8 +42,9 @@ public class SetWeatherEventBuilder  extends Builder<Event>{
 			this.ws = new ArrayList<Pair<String,Weather>>();
 			
 			for(int i= 0 ; i< JsonArray.length();i++) {
-				this.ws.add(new Pair<String,Weather>(JsonArray.getString(i),JsonArray.getEnum(Weather, i));
-			}	
+				JSONObject pair = JsonArray.getJSONObject(i);
+				this.ws.add(new Pair<String,Weather>(pair.getString("road"),Weather.getWeather(pair.getString("weather"))));
+			}
 			
 			 try {
 				e = new SetWeatherEvent(this.time ,this.ws);
@@ -55,7 +56,7 @@ public class SetWeatherEventBuilder  extends Builder<Event>{
 		}
 		
 		
-		
+		return e;
 		
 	}
 

@@ -55,6 +55,7 @@ public abstract class Road extends SimulatedObject {
 
 	@Override
 	void advance(int time) {
+		int Speed;
 		
 		//1
 		reduceTotalContamination();
@@ -62,14 +63,20 @@ public abstract class Road extends SimulatedObject {
 		updateSpeedLimit();
 		//3
 		for(Vehicle c : this.Vehicles) {
-			c.setCurrent_Speed(calculateVehicleSpeed(c));
+						
+			try {
+				c.setSpeed(calculateVehicleSpeed(c));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			c.advance(time);		
 		}	
 		
 		Collections.sort(this.Vehicles); 			
 		
-		
 	}
+	
 	
 
 	@Override
@@ -100,7 +107,7 @@ public abstract class Road extends SimulatedObject {
 	
 	public void exit(Vehicle v) {
 		
-		this.Vehicles.remove(this.Vehicles.indexOf(v));
+		this.Vehicles.remove(v);
 	}
 	
 	public void setWeather(Weather w) throws Exception{

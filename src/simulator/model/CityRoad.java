@@ -21,22 +21,29 @@ public class CityRoad extends Road{
 	protected void reduceTotalContamination() {
 		if(this.environmental_conditions == Weather.WINDY || this.environmental_conditions == Weather.STORM ) {
 			this.Global_Pollution-= CityRoad.WINDY_STORM_POLLUTION;
+			
 		}
 		else {
 			this.Global_Pollution-= CityRoad.OTHER_POLLUTION;
 		}
+		
+		if(this.Global_Pollution < 0) {
+			this.Global_Pollution =0;
+		}
 	}
 
 	@Override
+
 	protected void updateSpeedLimit() {
-		this.Current_Max_Speed_limit = this.Max_Speed;
+		//this.Current_Max_Speed_limit = this.Max_Speed;
 		
 	}
+	
 
 	@Override
 	protected int calculateVehicleSpeed(Vehicle v) {
 		
-		return (int) (((CityRoad.auxiliar-v.getPollution())/CityRoad.auxiliar)*this.Current_Max_Speed_limit);
+		return (int) (((CityRoad.auxiliar-v.getDegree_of_Pollution())/CityRoad.auxiliar)*this.Current_Max_Speed_limit);
 		
 	}
 

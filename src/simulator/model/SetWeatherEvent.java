@@ -1,5 +1,6 @@
 package simulator.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Exceptions.InvalidArgumentException;
@@ -12,6 +13,7 @@ public class SetWeatherEvent extends Event {
 	
 	public SetWeatherEvent(int time,List<Pair<String,Weather>> ws) throws InvalidArgumentException {
 		super(time);
+		this.ws = new ArrayList<Pair<String,Weather>>();
 		
 		if(ws != null) {
 			this.ws = ws;

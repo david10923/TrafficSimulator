@@ -62,7 +62,7 @@ public class InterCityRoad extends Road{
 	
 	public void updateSpeedLimit() {
 		
-		if(this.Max_Speed> this.Masive_Pollution) {
+		if(this.contamination_limit < this.Masive_Pollution) {
 			this.Current_Max_Speed_limit = (int)(this.Max_Speed *0.5);
 		}else
 			this.Current_Max_Speed_limit = this.Max_Speed;
@@ -72,7 +72,7 @@ public class InterCityRoad extends Road{
 	public int calculateVehicleSpeed(Vehicle v) {
 		
 		if(this.environmental_conditions== Weather.STORM ) {
-			return (int)(this.Max_Speed*0.8);
+			return (int)(this.Current_Max_Speed_limit*0.8);
 		}else {
 			return this.Current_Max_Speed_limit;
 		}	

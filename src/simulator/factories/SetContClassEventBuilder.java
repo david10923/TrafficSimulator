@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import simulator.misc.Pair;
 import simulator.model.Event;
 import simulator.model.NewSetContClassEvent;
+import simulator.model.Weather;
 
 public class SetContClassEventBuilder extends Builder {
 
@@ -36,7 +37,8 @@ public class SetContClassEventBuilder extends Builder {
 			j = data.getJSONArray("info");
 			
 			for(int i = 0; i< j.length();i++) {
-				cs.add(new Pair<String,Integer>(j.getString(i),(Integer) j.get(i)));
+				JSONObject pair = j.getJSONObject(i);
+				cs.add(new Pair<String,Integer>(pair.get("vehicle"));
 			}			
 			
 			try {
