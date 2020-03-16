@@ -14,7 +14,13 @@ public class CityRoad extends Road{
 		super(id, srcJunc, destJunc, maxSpeed, contLimit, length, weather);
 		
 		this.Vehicles = new ArrayList<Vehicle>();
-		// TODO Auto-generated constructor stub
+	
+		this.Max_Speed = maxSpeed; 
+		this.Length = length; 
+		this.environmental_conditions = weather;
+		this.Destination = destJunc; 
+		this.Source= srcJunc; 
+		this.Current_Max_Speed_limit = this.Max_Speed;
 	}
 
 	@Override
