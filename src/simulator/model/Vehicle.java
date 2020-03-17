@@ -320,7 +320,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 		
 		return ok; 
 			
-		}
+	}
 
 
 	public int getCERO() {
