@@ -39,7 +39,7 @@ public class SetContClassEventBuilder extends Builder {
 			for(int i = 0; i< j.length();i++) {
 				JSONObject pair = j.getJSONObject(i);
 				cs.add(new Pair<String,Integer>(pair.getString("vehicle"),pair.getInt("class")));
-				ss;
+				
 			}			
 			
 			try {
