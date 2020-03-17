@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import Exceptions.InvalidArgumentException;
@@ -159,11 +160,11 @@ public abstract class Road extends SimulatedObject {
 		
 	}
 	
-	public List<JSONObject> reportVehicle (){
-		List<JSONObject> j = new ArrayList<JSONObject>();
+	public JSONArray reportVehicle (){
+		JSONArray j = new JSONArray();
 		
 		for(int i =0 ; i< this.Vehicles.size();i++) {
-			j.add(this.Vehicles.get(i).report());
+			j.put(this.Vehicles.get(i).report().getJSONObject("id"));
 		}
 		
 		return j;

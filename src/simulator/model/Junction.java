@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import Exceptions.InvalidArgumentException;
@@ -101,10 +102,10 @@ public class Junction extends SimulatedObject {
 		if (this.TrafficLight == this.ReedLight) {
 			Junction.put("green", "none");
 		} else {
-			Junction.put("green", this.TrafficLight);
+			Junction.put("green", this.IncomingRoadList.get(TrafficLight).getId());
 		}
 
-		Junction.put("queues", this);
+		Junction.put("queues", );
 
 		// reportRoad();
 		// reportVehicles();
@@ -264,22 +265,28 @@ public class Junction extends SimulatedObject {
 	 * public Road getValue(Junction j) { return this.OutgoingRoadList.get(j); }
 	 */
 
-	public List<JSONObject> reportRoads() {
-		List<JSONObject> jlist = new ArrayList<JSONObject>();
-
-		for (int i = 0; i < this.IncomingRoadList.size(); i++) {
-			jlist.add(this.IncomingRoadList.get(i).report());
+	public JSONArray queues() {
+		JSONArray principal = new JSONArray();
+		
+		JSONArray vehicles = new JSONArray();
+		JSONObject road = new JSONObject();
+		
+		for(int i = 0; i< this.mapOfQueueRoad.size();i++){
+			principal.put(road.put("id",this.mapOfQueueRoad.get("id"))));
+			
 		}
-
-		return jlist;
-
+		
+		
+		
+		
 	}
 
-	public List<JSONObject> reportVehicles(Road r) {
-		List<JSONObject> jlist = new ArrayList<JSONObject>();
+	public JSONArray reportVehicles(Road r) {
+		JSONArray jlist = new JSONArray();
 
 		for (int i = 0; i < this.QueueList.size(); i++) {
-			jlist.add(this.mapOfQueueRoad.get(r).get(i).report());
+			jlist.put(this.mapOfQueueRoad);
+			
 		}
 
 		return jlist;

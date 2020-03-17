@@ -11,7 +11,7 @@ import simulator.model.NewVehicleEvent;
 
 public class NewVehicleEventBuilder extends Builder{
 
-	private static String type;
+	private static String type= "new_vehicle";
 	private int time; 
 	
 	private String id; 
