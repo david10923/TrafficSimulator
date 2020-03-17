@@ -83,7 +83,7 @@ public class RoadMap {
 		
 		//II
 		
-		if (!v.recorreItinerario(v)) {
+		if (!v.recorreItinerario()) {
 			ok2=true;
 		}
 		

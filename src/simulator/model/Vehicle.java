@@ -310,13 +310,18 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 	
 	
 	
-	boolean recorreItinerario (Vehicle v) {
+	boolean recorreItinerario () {
 		boolean ok = true; 
+		Junction source;
 		
-		for (Junction junction : Itinerary) {
-			if(junction.getOutgoingRoadList().isEmpty())
-				ok = false; 
-			}
+		for (int i = 0; i < this.Itinerary.size()-1;i++){
+			 if(! this.Itinerary.get(i).getOutgoingRoadList().containsKey(this.Itinerary.get(i+1))){ // si el mapa de ese junction contiene 
+				 // el siguiente junction 
+				 
+				 ok = false; 
+			 }
+			
+		}
 		
 		return ok; 
 			
