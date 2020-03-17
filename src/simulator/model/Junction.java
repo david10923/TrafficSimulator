@@ -105,13 +105,50 @@ public class Junction extends SimulatedObject {
 			Junction.put("green", this.IncomingRoadList.get(TrafficLight).getId());
 		}
 
-		Junction.put("queues", );
+		Junction.put("queues",getQueues() );
 
-		// reportRoad();
-		// reportVehicles();
-
+	
 		return Junction;
 	}
+	
+
+    JSONArray getQueues() {
+
+        JSONArray arr = new JSONArray();
+
+        for (int i = 0; i < this.mapOfQueueRoad.size(); i++) {
+            arr.put(reportQueues(this.IncomingRoadList.get(i)));
+        }
+
+        return arr;
+
+    }
+
+    JSONObject reportQueues(Road r) {
+
+        JSONObject obj = new JSONObject();
+
+        obj.put("road", r.getId());
+        obj.put("vehicles", getVehiclesList(r));
+
+        return obj;
+
+    }
+
+  
+    JSONArray getVehiclesList(Road r) {
+
+        JSONArray list = new JSONArray();
+
+        for (Vehicle v : this.mapOfQueueRoad.get(r))
+            list.put(v.report().getJSONObject(getId()));
+
+        return list;
+
+    }
+    
+    
+    
 
 	void addIncomingRoad(Road r) throws Exception {
 		int indexOfTheRoad;
@@ -265,32 +302,5 @@ public class Junction extends SimulatedObject {
 	 * public Road getValue(Junction j) { return this.OutgoingRoadList.get(j); }
 	 */
 
-	public JSONArray queues() {
-		JSONArray principal = new JSONArray();
-		
-		JSONArray vehicles = new JSONArray();
-		JSONObject road = new JSONObject();
-		
-		for(int i = 0; i< this.mapOfQueueRoad.size();i++){
-			principal.put(road.put("id",this.mapOfQueueRoad.get("id"))));
-			
-		}
-		
-		
-		
-		
-	}
-
-	public JSONArray reportVehicles(Road r) {
-		JSONArray jlist = new JSONArray();
-
-		for (int i = 0; i < this.QueueList.size(); i++) {
-			jlist.put(this.mapOfQueueRoad);
-			
-		}
-
-		return jlist;
-
-	}
-
+	
 }

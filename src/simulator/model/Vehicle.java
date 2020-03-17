@@ -69,7 +69,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 
 	@Override
 	public void advance(int time)  {
-		int Posible_Pollution = 0;
+		
 		
 		if(this.Status == VehicleStatus.TRAVELING) {// Donde inicializar la localizacion		
 			//a
@@ -312,7 +312,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 	
 	boolean recorreItinerario () {
 		boolean ok = true; 
-		Junction source;
+		
 		
 		for (int i = 0; i < this.Itinerary.size()-1;i++){
 			 if(! this.Itinerary.get(i).getOutgoingRoadList().containsKey(this.Itinerary.get(i+1))){ // si el mapa de ese junction contiene 

@@ -1,10 +1,12 @@
 package simulator.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import Exceptions.InvalidArgumentException;
@@ -28,40 +30,20 @@ public class RoadMap {
 	}
 	
 	protected void addJunction(Junction j) {
-		boolean ok = false; 
-		
-		for(int i = 0; i < this.JunctionList.size();i++) {
-			if(	this.JunctionList.get(i).getId().equals(j._id)) {
-			ok = true;
-			}
-		}
-		
-		if(!ok) {
+		if(this.IdJunctionMap.containsKey(j.getId())) {
 			this.JunctionList.add(j); 
 			this.IdJunctionMap.put(j.getId(), j);
 			
 		}
-		
 		
 	}
 	
 	
 	
 	protected void addRoad(Road r) throws InvalidArgumentException {
-		boolean ok = true, ok2 = false; 
-		// I 
-		for(int i = 0; i< this.RoadList.size();i++) {
-			if(!this.RoadList.get(i).getId().equals(r.getId())) {
-				ok = false;
-			}
-		}
-		//II
-		if(this.IdRoadMap.containsValue(r.getSource()) ||  this.IdRoadMap.containsValue(r.getDestination())) {
-			ok2 = true;
-		}
+	
 		
-		
-		if(ok2 && ok ) {
+		if(this.IdRoadMap.containsKey(r.getId()) && (!this.RoadList.contains(r.getSource()) || !this.RoadList.contains(r.getDestination()))){
 			this.RoadList.add(r); 
 			this.IdRoadMap.put(r.getId(), r);
 			
@@ -72,23 +54,13 @@ public class RoadMap {
 	}
 	
 	protected void addVehicle(Vehicle v) throws InvalidArgumentException {
-		boolean ok = false , ok2= false;
+		boolean  ok2= false;
 		
-		//I
-		for (int i = 0; i < this.VehicleList.size();i++) {
-			if(this.VehicleList.get(i).getId().equals(v._id)) {
-				ok = true;
-			}
-		}
-		
-		//II
 		
 		if (!v.recorreItinerario()) {
 			ok2=true;
 		}
-		
-		
-		if(ok && ok2) {
+		if(this.VehicleList.contains(v) && ok2) {
 			throw new  InvalidArgumentException("This Vehicle can not be add : "+ v._id);
 		}else {
 			this.VehicleList.add(v);
@@ -98,62 +70,27 @@ public class RoadMap {
 	
 	public Vehicle getVehicle(String id) {
 		
-		boolean ok = false;
-		int i = 0;
-		while(i < this.VehicleList.size() && ok) {
-			if(this.VehicleList.get(i)._id.equals(id)) {
-				ok =true;
-			}
-			i++;
+		if(this.IdVehicleMap.containsKey(id)){
+			return this.IdVehicleMap.get(id);
 		}
-		
-		if(ok) {
-			return this.VehicleList.get(i);
-		}
-		else {
-			return null;
-		}
-		
+		return null;
 		
 	}
 	
 	
 	public Road getRoad(String id ) {
-		boolean ok = false;
-		int i = 0;
-		while(i < this.RoadList.size() && ok) {
-			if(this.RoadList.get(i)._id.equals(id)) {
-				ok =true;
-			}
-			i++;
-		}
 		
-		if(ok) {
-			return this.RoadList.get(i);
+		if(this.IdRoadMap.containsKey(id)){
+			return this.IdRoadMap.get(id);
 		}
-		else {
-			return null;
-		}
-		
+		return null;
 	}
 	
 	public Junction getJunction(String id ) {
-		boolean ok = false;
-		int i = 0;
-		while(i < this.JunctionList.size() && ok) {
-			if(this.JunctionList.get(i)._id.equals(id)) {
-				ok =true;
-			}
-			i++;
+		if(this.IdJunctionMap.containsKey(id)){
+			return this.IdJunctionMap.get(id);
 		}
-		
-		if(ok) {
-			return this.JunctionList.get(i);
-		}
-		else {
-			return null;
-		}
-		
+		return null;
 	}
 	
 	
@@ -185,43 +122,34 @@ public class RoadMap {
 
 	
 
-	public List<Junction> getJunctionList() {
-		return JunctionList;
+	public List<Junction> getJunctions() {
+		List<Junction> aux ; 
+		aux = Collections.unmodifiableList(new ArrayList<>(this.JunctionList));
+		return aux;
+	}
+
+	public List<Road> getRoads() {
+		List<Road> aux ; 
+		aux = Collections.unmodifiableList(new ArrayList<>(this.RoadList));
+		return aux;
+	}
+
+	public List<Vehicle> getVehicles() {
+		List<Vehicle> aux ; 
+		aux = Collections.unmodifiableList(new ArrayList<>(this.VehicleList));
+		return aux;
 	}
 
 
-	public void setJunctionList(List<Junction> junctionList) {
-		JunctionList = junctionList;
-	}
 
-
-	public List<Road> getRoadList() {
-		return RoadList;
-	}
-
-
-	public void setRoadList(List<Road> roadList) {
-		RoadList = roadList;
-	}
-
-
-	public List<Vehicle> getVehicleList() {
-		return VehicleList;
-	}
-
-
-	public void setVehicleList(List<Vehicle> vehicleList) {
-		VehicleList = vehicleList;
-	}
-	
 	protected void reset() {
 		
-		this.IdJunctionMap = null;
-		this.IdRoadMap = null;
-		this.IdVehicleMap = null;
-		this.JunctionList = null; 
-		this.RoadList = null; 
-		this.VehicleList = null;
+		this.IdJunctionMap.clear();
+		this.IdRoadMap.clear();
+		this.IdVehicleMap.clear();
+		this.JunctionList.clear(); 
+		this.RoadList.clear();
+		this.VehicleList.clear();
 	}
 	
 	
@@ -241,36 +169,33 @@ public class RoadMap {
 	}
 	
 	
-	public List<JSONObject> reportJunctions () {
-		 List<JSONObject> jlist = new ArrayList<JSONObject>();
+	public JSONArray reportJunctions () {
+		JSONArray jlist = new JSONArray();
 		 
 		 for(int i =0 ; i < JunctionList.size();i++) {
-			 jlist.add(this.JunctionList.get(i).report());
+			 jlist.put(this.JunctionList.get(i).report());
 		 }
 		
 		return jlist; 
 		
 	}
 	
-	
-	
-
-	public List<JSONObject> reportRoads () {
-		 List<JSONObject> jlist = new ArrayList<JSONObject>();
+	public JSONArray reportRoads () {
+		JSONArray j= new JSONArray ();
 		 
 		 for(int i =0 ; i < this.RoadList.size();i++) {
-			 jlist.add(this.RoadList.get(i).report());
+			j.put(this.RoadList.get(i).report());
 		 }
 		
-		return jlist; 
+		return j; 
 		
 	}
 	
-	public List<JSONObject> reportVehicles () {
-		 List<JSONObject> jlist = new ArrayList<JSONObject>();
+	public JSONArray reportVehicles () {
+		 JSONArray jlist = new JSONArray();
 		 
 		 for(int i =0 ; i < this.VehicleList.size();i++) {
-			 jlist.add(this.VehicleList.get(i).report());
+			 jlist.put(this.VehicleList.get(i).report());
 		 }
 		
 		return jlist; 
