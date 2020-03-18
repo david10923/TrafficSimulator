@@ -6,7 +6,7 @@ import Exceptions.InvalidArgumentException;
 
 public class NewJunctionEvent extends Event {
 	
-	private int time;
+	//private int time;
 	private String id; 
 	private LightSwitchingStrategy lightStrategy; 
 	private DequeingStrategy dqStrategy; 
@@ -41,14 +41,6 @@ public class NewJunctionEvent extends Event {
 	
 	
 
-	
-	
-	public int getTime() {
-		return time; 
-	}
-	public void setTime(int time) {
-		this.time = time;
-	}
 	
 
 	public String getId() {
