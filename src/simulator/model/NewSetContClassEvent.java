@@ -32,21 +32,27 @@ public class NewSetContClassEvent extends Event{
 		
 		for(int i = 0;i< this.cs.size();i++) {
 			
-			id = this.cs.get(i).getFirst(); 
-			
-			while(j < map.getVehicles().size()  && ok) {
+			try{
+				id = this.cs.get(i).getFirst(); 
 				
-				if(map.getVehicles().get(j).getId().equals(id)) {// si no esta en la lista ?? 
-					ok = true;
-					try {
-						map.getVehicles().get(j).setContaminationClass(this.cs.get(i).getSecond());
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.getMessage();
+				while(j < map.getVehicles().size()  && ok) {
+					
+					if(map.getVehicles().get(j).getId().equals(id)) {
+						ok = true;
+						try {
+							map.getVehicles().get(j).setContaminationClass(this.cs.get(i).getSecond());
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.getMessage();
+						}
 					}
 				}
+				
+			}catch(Exception e ){
+				System.out.println("This road not exits");
 			}
 			
+						
 			
 			
 		}

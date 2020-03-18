@@ -25,19 +25,28 @@ public class SetWeatherEvent extends Event {
 	}
 
 	@Override
-	void execute(RoadMap map) throws InvalidArgumentException {
-		String id ; 
-		
-		for(int i =0 ; i< this.ws.size();i++) {
-			if(	map.getRoad(this.ws.get(i).getFirst()) != null) { // si esta en la lista
-				id = this.ws.get(i).getFirst() ; // t da el string de la carretera
-				
-			}
-			else {
-				throw new InvalidArgumentException("The String does not exist in the list");
-			}
+	void execute(RoadMap map)  {
+		 
+		for (Pair<String, Weather> p : ws) {
 			
-		}
+            try {
+
+                Road road = map.getRoad(p.getFirst());
+                try {
+
+                    road.setWeather(p.getSecond());
+
+                } catch (Exception e) {
+                    e.getMessage();
+                }
+
+            } catch (Exception e) {
+                System.out.println("This road not exits");
+            }
+
+        }
+		
+	
 		
 	}
 	

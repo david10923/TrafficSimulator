@@ -31,7 +31,8 @@ public class Main {
 	private static String _outFile = null;
 	private static Factory<Event> _eventsFactory = null;
 	
-
+	private static String time = null; 
+	
 	private static void parseArgs(String[] args) {
 
 		// define the valid command line options
@@ -74,7 +75,7 @@ public class Main {
 				Option.builder("o").longOpt("output").hasArg().desc("Output file, where reports are written.").build());
 		cmdLineOptions.addOption(Option.builder("h").longOpt("help").desc("Print this message").build());
 		
-		cmdLineOptions.addOption(Option.builder("t").longOpt("ticks").hasArg().desc("Ticks to the simulator´s main loop").build());
+		cmdLineOptions.addOption(Option.builder("t").longOpt("ticks").hasArg().desc("Ticks to the simulatorï¿½s main loop").build());
 
 		return cmdLineOptions;
 	}
@@ -98,11 +99,15 @@ public class Main {
 		_outFile = line.getOptionValue("o");
 	}
 
-	private static void parseInFileOption2(CommandLine line) {
-		_timeLimit = Integer.parseInt(line.getOptionValue("t"));
-		if (_inFile == null) {
-			_timeLimit = _timeLimitDefaultValue;
+	private static void parseInFileOption2(CommandLine line) throws ParseException {
+		time = line.getOptionValue("t",Integer.toString(_timeLimitDefaultValue));
+		
+		_timeLimit = Integer.decode(time);
+		
+		if(_timeLimit <= 0 ){
+			throw new ParseException("The value is less than 0");
 		}
+		
 	}
 	
 	
@@ -128,7 +133,7 @@ public class Main {
 		eventBuilders.add(new SetWeatherEventBuilder());
 		
 		
-		// añadir los demas enventos 
+		// aï¿½adir los demas enventos 
 		
 		
 		
