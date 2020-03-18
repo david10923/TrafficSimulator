@@ -39,20 +39,6 @@ public class NewCityRoadEvent  extends NewRoadEvent{
 	}
 	
 
-	@Override
-	void execute(RoadMap map) {
-		
-		this.src = map.getJunction(this.srcJunc);
-		this.dest = map.getJunction(this.destJunc);		
-		
-		try {
-			map.addRoad(createRoadObject());
-		} catch (InvalidArgumentException e) {
-			// TODO Auto-generated catch block
-			e.getMessage();
-		}
-	}
-	
 	
 } 
 
