@@ -30,6 +30,7 @@ public class Main {
 	private static String _inFile = null;
 	private static String _outFile = null;
 	private static Factory<Event> _eventsFactory = null;
+	
 
 	private static void parseArgs(String[] args) {
 
@@ -45,6 +46,7 @@ public class Main {
 			parseHelpOption(line, cmdLineOptions);
 			parseInFileOption(line);
 			parseOutFileOption(line);
+			parseInFileOption2(line);
 
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
@@ -94,6 +96,14 @@ public class Main {
 		_outFile = line.getOptionValue("o");
 	}
 
+	private static void parseInFileOption2(CommandLine line) {
+		_timeLimit = Integer.parseInt(line.getOptionValue("-t"));
+		if (_inFile == null) {
+			_timeLimit = _timeLimitDefaultValue;
+		}
+	}
+	
+	
 	private static void initFactories() {
 
 		ArrayList<Builder<LightSwitchingStrategy>> lsbs = new ArrayList<>();
