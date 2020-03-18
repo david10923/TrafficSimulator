@@ -49,14 +49,14 @@ public class TrafficSimulator {
 		
 		//paso 3
 		
-		for(int i = 0; i< this.map_of_roads.getJunctionList().size();i++) {
-			this.map_of_roads.getJunctionList().get(i).advance(this.time_of_simulation);
+		for(int i = 0; i< this.map_of_roads.getJunctions().size();i++) {
+			this.map_of_roads.getJunctions().get(i).advance(this.time_of_simulation);
 		}
 		
 		// paso 4 
 		
-		for(int i = 0; i< this.map_of_roads.getRoadList().size();i++) {
-			this.map_of_roads.getRoadList().get(i).advance(this.time_of_simulation);
+		for(int i = 0; i< this.map_of_roads.getRoads().size();i++) {
+			this.map_of_roads.getRoads().get(i).advance(this.time_of_simulation);
 		}
 		
 		
@@ -64,11 +64,8 @@ public class TrafficSimulator {
 	
 	public void reset() {
 		
-		this.map_of_roads = null; 
-		for(int i = 0; i < this.list_of_events.size();i++) {
-			this.list_of_events.remove(i);
-		}
-			
+		this.map_of_roads.reset(); 		
+		this.list_of_events.clear();	
 		this.time_of_simulation = 0;
 	}
 	

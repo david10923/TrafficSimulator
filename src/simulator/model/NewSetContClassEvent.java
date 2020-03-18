@@ -34,12 +34,12 @@ public class NewSetContClassEvent extends Event{
 			
 			id = this.cs.get(i).getFirst(); 
 			
-			while(j < map.getVehicleList().size()  && ok) {
+			while(j < map.getVehicles().size()  && ok) {
 				
-				if(map.getVehicleList().get(j).getId().equals(id)) {
+				if(map.getVehicles().get(j).getId().equals(id)) {// si no esta en la lista ?? 
 					ok = true;
 					try {
-						map.getVehicleList().get(j).setContaminationClass(this.cs.get(i).getSecond());
+						map.getVehicles().get(j).setContaminationClass(this.cs.get(i).getSecond());
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.getMessage();
