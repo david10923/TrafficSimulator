@@ -8,7 +8,7 @@ import simulator.model.LightSwitchingStrategy;
 import simulator.model.NewJunctionEvent;
 
 public class NewJunctionEventBuilder extends Builder<Event>{
-	private static String type= "move_first_dqs";
+	private static String type= "new_junction";
 	private final int CERO = 1; 
 	private final int ONE = 1;
 	private Factory<LightSwitchingStrategy> lssFactory; 

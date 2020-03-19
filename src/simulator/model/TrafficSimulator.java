@@ -23,7 +23,6 @@ public class TrafficSimulator {
 	public void addEvent (Event e) {
 		this.list_of_events.add(e); 
 		
-		
 	}
 	
 	public void advance() {
