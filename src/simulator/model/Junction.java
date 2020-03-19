@@ -41,7 +41,7 @@ public class Junction extends SimulatedObject {
 			this.setyCoor(yCoor);
 
 			this.OutgoingRoadList = new HashMap<Junction, Road>();
-			this.QueueList = new LinkedList<List<Vehicle>>();
+			this.QueueList = new ArrayList<List<Vehicle>>();
 			this.IncomingRoadList = new ArrayList<Road>();
 			this.mapOfQueueRoad = new HashMap<Road, List<Vehicle>>();
 
@@ -58,24 +58,24 @@ public class Junction extends SimulatedObject {
 	void advance(int time) {
 
 		if (this.TrafficLight != this.ReedLight) {
-			List<Vehicle> q = this.QueueList.get(this.TrafficLight);
-			List<Vehicle> list = new ArrayList<Vehicle>();
+				List<Vehicle> q = this.QueueList.get(this.TrafficLight);
+				List<Vehicle> list = new ArrayList<Vehicle>();
 
-			list = this.Strategy_of_droping_vehicles.dequeue(q);
+				list = this.Strategy_of_droping_vehicles.dequeue(q);
 
-			for (int i = 0; i < list.size(); i++) {
-				try {
-					list.get(i).moveToNextRoad();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				for (int i = 0; i < list.size(); i++) {
+					try {
+						list.get(i).moveToNextRoad();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					this.QueueList.get(this.TrafficLight).remove(list.get(i));
+					
+
 				}
-
-				this.QueueList.get(this.TrafficLight).remove(list.get(i));
-				
-
-			}
-
+			
 		}
 
 		if(this.TrafficLight != this.Strategy_of_Change.chooseNextGreen(this.IncomingRoadList, this.QueueList,

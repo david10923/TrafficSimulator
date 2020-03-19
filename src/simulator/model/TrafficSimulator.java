@@ -1,5 +1,6 @@
 package simulator.model;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -37,6 +38,18 @@ public class TrafficSimulator {
 	public void advance() {
 		this.time_of_simulation++;
 		
+		
+		Iterator<Event> it  = this.list_of_events.iterator();
+		
+		while(it.hasNext()){
+			Event e = it.next();
+			if(e.getTime() == this.time_of_simulation){
+				e.execute(this.map_of_roads);
+				it.remove();
+			}
+		}
+		
+		/*
 		for (int i = 0 ; i< this.list_of_events.size();i++) {
 			
 			if(this.list_of_events.get(i).getTime() == this.time_of_simulation) {
@@ -44,7 +57,7 @@ public class TrafficSimulator {
 			}
 			this.list_of_events.remove(i);
 		}
-		
+		*/
 		
 		//paso 3
 		
