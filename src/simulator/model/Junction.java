@@ -58,6 +58,7 @@ public class Junction extends SimulatedObject {
 	void advance(int time) {
 
 		if (this.TrafficLight != this.ReedLight) {
+			//if(!this.QueueList.isEmpty()) {
 				List<Vehicle> q = this.QueueList.get(this.TrafficLight);
 				List<Vehicle> list = new ArrayList<Vehicle>();
 
@@ -75,6 +76,8 @@ public class Junction extends SimulatedObject {
 					
 
 				}
+				
+			//}
 			
 		}
 
