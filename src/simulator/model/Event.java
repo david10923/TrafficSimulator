@@ -22,5 +22,5 @@ public abstract class Event implements Comparable<Event> {
 		return Integer.valueOf(this.getTime()).compareTo(o.getTime());
 	}
 
-	abstract void execute(RoadMap map) throws InvalidArgumentException;
+	abstract void execute(RoadMap map);
 }

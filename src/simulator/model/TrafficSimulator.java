@@ -1,5 +1,6 @@
 package simulator.model;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import Exceptions.InvalidArgumentException;
+import simulator.misc.SortedArrayList;
 
 public class TrafficSimulator {
 	
@@ -15,42 +17,37 @@ public class TrafficSimulator {
 	private List<Event> list_of_events; 
 	private int time_of_simulation; 
 	
-	public TrafficSimulator(){ // REVISAR 
+	public TrafficSimulator(){
+		this.list_of_events = new SortedArrayList<Event>();
+		this.time_of_simulation= 0;
 		 
 	}
 	
 	
 	public void addEvent (Event e) {
+		
 		this.list_of_events.add(e); 
 		
 	}
 	
 	public void advance() {
-		
-		
-		
 		this.time_of_simulation++;
 		
 		for (int i = 0 ; i< this.list_of_events.size();i++) {
 			
 			if(this.list_of_events.get(i).getTime() == this.time_of_simulation) {
-				try {
 					this.list_of_events.get(i).execute(this.map_of_roads);
-				} catch (InvalidArgumentException e) {
-					// TODO Auto-generated catch block
-					e.getMessage();
-				}
-				
 			}
-			
 			this.list_of_events.remove(i);
 		}
+		
 		
 		//paso 3
 		
 		for(int i = 0; i< this.map_of_roads.getJunctions().size();i++) {
 			this.map_of_roads.getJunctions().get(i).advance(this.time_of_simulation);
 		}
+		
 		
 		// paso 4 
 		
