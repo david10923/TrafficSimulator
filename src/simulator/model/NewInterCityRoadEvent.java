@@ -3,13 +3,10 @@ package simulator.model;
 import Exceptions.InvalidArgumentException;
 
 public class NewInterCityRoadEvent extends NewRoadEvent {
-
 	
-	
-
 	public NewInterCityRoadEvent(int time ,String id,String srcJun ,String destJunc,int length,int co2Limit , int maxSpeed , Weather weather ) {
 		super(time);
-		this._time = time; 
+		//this._time = time; 
 		this.id = id; 
 		this.srcJunc = srcJun; 
 		this.destJunc = destJunc; 

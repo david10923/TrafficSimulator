@@ -4,7 +4,7 @@ import Exceptions.InvalidArgumentException;
 
 public abstract class NewRoadEvent extends Event {
 	
-	protected  int time; 
+	//protected  int time; 
 	protected  String id; 
 	protected  String srcJunc; 
 	protected String destJunc; 

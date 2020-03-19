@@ -12,7 +12,6 @@ import simulator.model.Weather;
 public abstract class NewRoadEventBuilder extends Builder<Event>{
 	
 	
-	
 	protected int time ; 
 	protected String id;
 	protected String src; 
@@ -41,7 +40,7 @@ public abstract class NewRoadEventBuilder extends Builder<Event>{
 			this.lenght = data.getInt("length");
 			this.co2limit = data.getInt("co2limit");
 			this.maxspeed = data.getInt("maxspeed"); 
-			this.weather = (Weather) data.get("weather");
+			this.weather = 	Weather.getWeather(data.getString("weather"));
 					
 			
 			e = createTheRoad();
