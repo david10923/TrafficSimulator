@@ -17,9 +17,8 @@ public class InterCityRoad extends Road{
 	
 	protected InterCityRoad(String id ,Junction srcJunc ,Junction destJunc ,int maxSpeed,int contLimit ,int length,Weather weather) throws Exception {
 		super(id,srcJunc,destJunc,maxSpeed,contLimit,length,weather);
+		
 		this.Vehicles = new ArrayList<Vehicle>();
-		
-		
 		this.Max_Speed = maxSpeed; 
 		this.Length = length; 
 		this.environmental_conditions = weather;

@@ -20,13 +20,17 @@ public class TrafficSimulator {
 	public TrafficSimulator(){
 		this.list_of_events = new SortedArrayList<Event>();
 		this.time_of_simulation= 0;
+		this.map_of_roads = new RoadMap();
 		 
 	}
+	
 	
 	
 	public void addEvent (Event e) {
 		
 		this.list_of_events.add(e); 
+		
+		
 		
 	}
 	

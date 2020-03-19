@@ -11,7 +11,6 @@ import simulator.model.Weather;
 
 public abstract class NewRoadEventBuilder extends Builder<Event>{
 	
-	
 	protected int time ; 
 	protected String id;
 	protected String src; 

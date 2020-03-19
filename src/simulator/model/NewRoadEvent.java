@@ -25,8 +25,7 @@ public abstract class NewRoadEvent extends Event {
 	
 	
 	void execute(RoadMap map) {
-			
-	
+		
 			this.src =map.getJunction(this.srcJunc);
 			this.dest = map.getJunction(this.destJunc);
 			

@@ -27,7 +27,7 @@ public class NewJunctionEventBuilder extends Builder<Event>{
 
 	@Override
 	protected Event createTheInstance(JSONObject data) {
-		int time ; 
+	
 		Event e;
 		
 		if(data.has("time") && data.has("id") && data.has("coor") && data.has("ls_strategy") && data.has("dq_strategy")) {

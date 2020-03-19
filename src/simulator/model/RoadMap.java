@@ -30,7 +30,7 @@ public class RoadMap {
 	}
 	
 	protected void addJunction(Junction j) {
-		if(this.IdJunctionMap.containsKey(j.getId())) {
+		if(!this.IdJunctionMap.containsKey(j.getId())) {
 			this.JunctionList.add(j); 
 			this.IdJunctionMap.put(j.getId(), j);
 			
@@ -42,15 +42,18 @@ public class RoadMap {
 	
 	protected void addRoad(Road r) throws InvalidArgumentException {
 	
-		
-		if(this.IdRoadMap.containsKey(r.getId()) && (!this.RoadList.contains(r.getSource()) || !this.RoadList.contains(r.getDestination()))){
-			this.RoadList.add(r); 
-			this.IdRoadMap.put(r.getId(), r);
-			
-		}else {
-			throw new InvalidArgumentException("You can not add the road you specified");
+		if(this.IdRoadMap.containsKey(r.getId())){
+			throw new InvalidArgumentException("The road is in the map");
+		}
+		if(!this.JunctionList.contains(r.getSource())){
+			throw new InvalidArgumentException("The junction is not in the map");
+		}
+		if(!this.JunctionList.contains(r.getDestination())){
+			throw new InvalidArgumentException("The junction is not in the map");
 		}
 		
+		this.IdRoadMap.put(r.getId(), r);
+		this.RoadList.add(r);
 	}
 	
 	protected void addVehicle(Vehicle v) throws InvalidArgumentException {

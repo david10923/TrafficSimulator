@@ -22,6 +22,7 @@ public class RoundRobinStrategyBuilder extends Builder<LightSwitchingStrategy> {
 			data.put("timeslot", data.getInt("timeslot"));		
 		else 
 			data.put("timeslot",ONE);
+	
 		
 		
 		LightSwitchingStrategy rr = new RoundRobinStrategy(data.getInt("timeslot"));

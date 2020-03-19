@@ -5,7 +5,7 @@ import simulator.model.NewInterCityRoadEvent;
 
 public class NewInterCityRoadEventBuilder extends NewRoadEventBuilder {
 
-	private static String type = "new_city_road";
+	private static String type = "new_inter_city_road";
 	
 	public NewInterCityRoadEventBuilder() {
 		super(type);

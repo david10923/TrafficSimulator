@@ -36,7 +36,7 @@ public class NewVehicleEventBuilder extends Builder{
 			this.time = data.getInt("time"); 
 			this.id = data.getString("id");
 			this.maxSpeed = data.getInt("maxspeed");
-			this.contClass = data.getInt("contclass");
+			this.contClass = data.getInt("class");
 			
 			JsonArray = data.getJSONArray("itinerary");			
 			this.Itinerary = new ArrayList<>();
