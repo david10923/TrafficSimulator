@@ -37,9 +37,6 @@ public class RoadMap {
 		}
 		
 	}
-	
-	
-	
 	protected void addRoad(Road r) throws InvalidArgumentException {
 	
 		if(this.IdRoadMap.containsKey(r.getId())){
@@ -54,6 +51,15 @@ public class RoadMap {
 		
 		this.IdRoadMap.put(r.getId(), r);
 		this.RoadList.add(r);
+		
+		try {
+			r.Source.addOutgoingRoad(r);
+			r.Destination.addIncomingRoad(r);			
+			
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
 	}
 	
 	protected void addVehicle(Vehicle v) throws InvalidArgumentException {
@@ -68,6 +74,7 @@ public class RoadMap {
 		}else {
 			this.VehicleList.add(v);
 			this.IdVehicleMap.put(v._id, v);
+			
 		}
 	}
 	
@@ -170,6 +177,7 @@ public class RoadMap {
 		return roadMap;
 		
 	}
+	
 	
 	
 	public JSONArray reportJunctions () {

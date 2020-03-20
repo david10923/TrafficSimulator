@@ -44,12 +44,15 @@ public class Junction extends SimulatedObject {
 			this.QueueList = new ArrayList<List<Vehicle>>();
 			this.IncomingRoadList = new ArrayList<Road>();
 			this.mapOfQueueRoad = new HashMap<Road, List<Vehicle>>();
+			
+			this.QueueList = new ArrayList<List<Vehicle>>();
+			
 
 			this.Strategy_of_droping_vehicles = dqStrategy;
 			this.Strategy_of_Change = isStrategy;
 			
 			this.Last_TrafficLight_change = 0;
-
+			this.TrafficLight = -1;
 		}
 
 	}
@@ -80,6 +83,8 @@ public class Junction extends SimulatedObject {
 			}
 			
 		}
+		
+		/*
 
 		if(this.TrafficLight != this.Strategy_of_Change.chooseNextGreen(this.IncomingRoadList, this.QueueList,
 				this.TrafficLight, this.Last_TrafficLight_change, time)) {
@@ -89,6 +94,21 @@ public class Junction extends SimulatedObject {
 			
 			this.Last_TrafficLight_change = time;
 		}
+		*/
+		
+		int nextGreen= this.Strategy_of_Change.chooseNextGreen(this.IncomingRoadList, this.QueueList,
+				this.TrafficLight, this.Last_TrafficLight_change, time);
+		
+		if(nextGreen  != this.TrafficLight){
+			this.TrafficLight = nextGreen; 
+			this.Last_TrafficLight_change = time ; 
+			
+		}
+				
+		
+	
+		
+		
 		
 		//this.Last_TrafficLight_change++;
 		
@@ -158,35 +178,41 @@ public class Junction extends SimulatedObject {
 
 		if (r.getDestination() != this) {
 			throw new Exception("The road that you specified is not an incoming road");
-		} else {
-
+		} 
+		/*
 			this.IncomingRoadList.add(r);
 
-			this.QueueList = new LinkedList<List<Vehicle>>();
-
-			this.mapOfQueueRoad = new HashMap<Road, List<Vehicle>>();
-
+			this.QueueList = new ArrayList<List<Vehicle>>();
+			
 			indexOfTheRoad = this.IncomingRoadList.indexOf(r);
 
-			this.QueueList.add(indexOfTheRoad, this.IncomingRoadList.get(indexOfTheRoad).Vehicles);
+			this.QueueList.add(this.IncomingRoadList.get(indexOfTheRoad).Vehicles);
 
 			this.mapOfQueueRoad.put(r, this.IncomingRoadList.get(indexOfTheRoad).Vehicles);
-
-		}
+		*/
+		IncomingRoadList.add(r);
+		List<Vehicle> cola = new ArrayList<Vehicle>();
+		QueueList.add(cola);
+		this.mapOfQueueRoad.put(r, cola);
+		
+		
+		
 
 	}
 
 	void addOutgoingRoad(Road r) throws Exception {
-
-		if ((this.OutgoingRoadList.containsKey(this)) || (r.getSource() != this)) { // si alguna carretera va al cruce o
+		
+		if(!this.OutgoingRoadList.isEmpty()){
+		if ((this.OutgoingRoadList.containsKey(r.getDestination())) || (r.getSource() != this)) {// si alguna carretera va al cruce o
 																					// r es un cruce entrante
 			throw new Exception("The road can not be a OutgoingRoad");
-		} else {
-			this.OutgoingRoadList.put(this, r);
+		}
+		
+		}
+		
+			this.OutgoingRoadList.put(r.getDestination(), r);
 
 		}
-
-	}
 
 	public void enter(Vehicle v) {
 		boolean ok = false;
@@ -215,10 +241,10 @@ public class Junction extends SimulatedObject {
 	}
 
 	public Road roadTo(Junction j) {
-
+		
 		return this.OutgoingRoadList.get(j);
-
 	}
+	
 
 	public int getyCoor() {
 

@@ -54,7 +54,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 			this.ancientLocalization = 0;
 			this.Localization=0;
 			this.Degree_of_Pollution = contClass;
-			this.Pollution = contClass;
+			this.Pollution = 0;
 			this.Last_Junction_index=0;
 			this.Status= VehicleStatus.PENDING;
 			
@@ -77,13 +77,11 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 			this.Pollution+= this.Degree_of_Pollution;
 			*/
 			
-			c = ((this.Localization-this.ancientLocalization)*this.Pollution);
-			this.Degree_of_Pollution+= c; 
-			this.Pollution+=c;
-			
+			c = ((this.Localization-this.ancientLocalization)*this.Degree_of_Pollution);
+			this.Degree_of_Pollution+= c; 				
 			
 			try {
-				this.Road.addContamination(c);// antes estaba degree of pollution 
+				this.Road.addContamination(c); 
 			} catch (InvalidArgumentException e) {
 				e.toString();
 			}
@@ -142,16 +140,17 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 	 void moveToNextRoad() throws Exception {
 		Junction actualJunc , nextJunc;
 		
-		if(this.Status != VehicleStatus.PENDING || this.Status != VehicleStatus.WAITING) {
-			throw new Exception("The state of the vehicle is false");
+		if(this.Status == VehicleStatus.ARRIVED){
+			throw new Exception("The vehice is travelling");
+		}
+		if( this.Status == VehicleStatus.TRAVELING){
+			
+			throw new Exception("The vehice is travelling");
 		}
 		
 		if(this.Last_Junction_index +1 == this.Itinerary.size()) {
-			
 			this.Road.exit(this);
-			this.Status = VehicleStatus.ARRIVED;
-			
-			
+			this.Status = VehicleStatus.ARRIVED;			
 		}else {
 
 			if(this.Status == VehicleStatus.PENDING ) { 
@@ -162,10 +161,18 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 				
 				this.Road = actualJunc.roadTo(nextJunc);
 				
+				this.Status = VehicleStatus.TRAVELING;
+				
+				try {
+					this.Road.enter(this);
+				}
+				catch(Exception e ) {
+					e.getMessage();
+				}
+				
+				//this.Road = nextJunc.roadTo(actualJunc);
 			}
 			else {	
-				
-				
 				this.Road.exit(this);
 				
 				actualJunc= this.Itinerary.get(this.Last_Junction_index); 
@@ -184,8 +191,6 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 					
 					this.Localization =CERO;
 					this.Status = VehicleStatus.TRAVELING;
-					
-					
 				}
 			}
 			

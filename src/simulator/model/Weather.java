@@ -5,19 +5,9 @@ public enum Weather {
 
 
 
-	public static Weather getWeather(String weather) {
+	public static Weather getWeather(String s) {
+		s.toUpperCase();
+		return Weather.valueOf(s);
 		
-		if(weather == "SUNNY") {
-			return SUNNY;
-		}
-		else if (weather == "CLOUDY") {
-			return CLOUDY;
-		}else if (weather == "RAINY") {
-			return RAINY;
-		}else if (weather == "WINDY") {
-			return WINDY;
-		}else {
-			return STORM; 
-		}
 	}
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import simulator.misc.Pair;
 
 public class NewSetContClassEvent extends Event{
-	private int time; 
+
 	private List<Pair<String,Integer>>cs;
 	
 
@@ -60,13 +60,7 @@ public class NewSetContClassEvent extends Event{
 	}
 	
 	
-	public int getTime() {
-		return time;
-	}
-
-	public void setTime(int time) {
-		this.time = time;
-	}
+	
 
 	public List<Pair<String, Integer>> getCs() {
 		return cs;

@@ -72,7 +72,7 @@ public class Controller {
 			 i++;
 		}
 		_sim.advance();
-		 p.print(_sim.report());		
+		p.print(_sim.report());		
 		
 		p.println("]");
 		p.println("}");

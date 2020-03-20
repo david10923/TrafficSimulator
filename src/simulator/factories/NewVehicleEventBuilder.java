@@ -43,6 +43,7 @@ public class NewVehicleEventBuilder extends Builder{
 			
 			for(int i = 0 ; i< JsonArray.length();i++) {
 				this.Itinerary.add(JsonArray.getString(i));
+				
 			}
 			e = new NewVehicleEvent(time, id, maxSpeed, contClass, Itinerary);
 			return e;

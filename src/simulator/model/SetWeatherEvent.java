@@ -17,6 +17,7 @@ public class SetWeatherEvent extends Event {
 		
 		if(ws != null) {
 			this.ws = ws;
+			this._time = time;
 		}
 		else {
 			throw new InvalidArgumentException("The list is null");

@@ -47,6 +47,7 @@ public abstract class Road extends SimulatedObject {
 			this.Destination = destJunc; 
 			this.Source= srcJunc; 
 			this.Current_Max_Speed_limit = this.Max_Speed;
+			this.Global_Pollution = contLimit ; 
 						
 		}
 	}
@@ -56,7 +57,7 @@ public abstract class Road extends SimulatedObject {
 
 	@Override
 	void advance(int time) {
-		int Speed;
+	
 		
 		//1
 		reduceTotalContamination();
@@ -90,8 +91,6 @@ public abstract class Road extends SimulatedObject {
 		road.put("weather", this.environmental_conditions);
 		road.put("co2", this.Global_Pollution);
 		road.put("vehicles",reportVehicle());
-		
-		
 		return road;
 	}
 	
@@ -166,7 +165,7 @@ public abstract class Road extends SimulatedObject {
 		JSONArray j = new JSONArray();
 		
 		for(int i =0 ; i< this.Vehicles.size();i++) {
-			j.put(this.Vehicles.get(i).report().getJSONObject("id"));
+			j.put(this.Vehicles.get(i).getId());
 		}
 		
 		return j;

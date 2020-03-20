@@ -9,13 +9,14 @@ public class MoveFirstStrategy implements DequeingStrategy {
 	
 	@Override
 	public List<Vehicle> dequeue(List<Vehicle> q) {
-		List<Vehicle> listaAux; 
 		
-		listaAux = q; 
+		if(q.size() >0){
+			List<Vehicle>  listaAux = q; 
+			listaAux.add(q.get(CERO));
+			 return listaAux;
+		}
+		return null;
 		
-		 listaAux.set(CERO, q.get(CERO));
-		
-		 return listaAux;
 	}
 	
 	
