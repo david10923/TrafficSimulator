@@ -52,6 +52,7 @@ public class Controller {
 	
 	
 	public void run (int in , OutputStream out ) {
+		int i = 0;
 		
 		if (out == null) {
 			out = new OutputStream() {
@@ -62,12 +63,17 @@ public class Controller {
 		
 		PrintStream p = new PrintStream(out);
 		p.println("{");
-		p.println(" \"states\": [");		
-		 _sim.advance();
-		 p.print(_sim.report());
-		 p.println(",");
-		 
-		// escribir el último paso
+		p.println(" \"states\": [");	
+		
+		while(i < in-1){
+			 _sim.advance();
+			 p.print(_sim.report());
+			 p.println(",");
+			 i++;
+		}
+		_sim.advance();
+		 p.print(_sim.report());		
+		
 		p.println("]");
 		p.println("}");
 		

@@ -41,7 +41,7 @@ public class CityRoad extends Road{
 	@Override
 
 	protected void updateSpeedLimit() {
-		//this.Current_Max_Speed_limit = this.Max_Speed;
+		this.Current_Max_Speed_limit = this.Max_Speed;
 		
 	}
 	

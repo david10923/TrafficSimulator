@@ -89,7 +89,7 @@ public abstract class Road extends SimulatedObject {
 		road.put("speedLimit", this.Max_Speed);
 		road.put("weather", this.environmental_conditions);
 		road.put("co2", this.Global_Pollution);
-		road.put("vehicles", reportVehicle());
+		road.put("vehicles",reportVehicle());
 		
 		
 		return road;
@@ -110,6 +110,8 @@ public abstract class Road extends SimulatedObject {
 		
 		this.Vehicles.remove(v);
 	}
+	
+	
 	
 	public void setWeather(Weather w) throws Exception{
 		if(w==null)

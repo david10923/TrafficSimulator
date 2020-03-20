@@ -25,15 +25,11 @@ public class SetWeatherEvent extends Event {
 	}
 
 	@Override
-	void execute(RoadMap map)  {
-		 
-		for (Pair<String, Weather> p : ws) {
-			
+	void execute(RoadMap map)  {		 
+		for (Pair<String, Weather> p : ws) {			
             try {
-
                 Road road = map.getRoad(p.getFirst());
                 try {
-
                     road.setWeather(p.getSecond());
 
                 } catch (Exception e) {
@@ -44,10 +40,7 @@ public class SetWeatherEvent extends Event {
                 System.out.println("This road not exits");
             }
 
-        }
-		
-	
-		
+        }		
 	}
 	
 	

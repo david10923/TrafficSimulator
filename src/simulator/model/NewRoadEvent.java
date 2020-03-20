@@ -11,9 +11,7 @@ public abstract class NewRoadEvent extends Event {
 	protected int length; 
 	protected int co2Limit;
 	protected int maxSpeed; 
-	protected Weather weather ;
-
-	
+	protected Weather weather;
 	protected Junction src; 
 	protected Junction dest; 
 	

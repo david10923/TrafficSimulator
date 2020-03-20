@@ -161,9 +161,9 @@ public class RoadMap {
 		
 		JSONObject roadMap = new JSONObject();
 		
-		roadMap.put("junctions :" ,reportJunctions()); 
-		roadMap.put("roads :",reportRoads());
-		roadMap.put("vehicles :",reportVehicles());
+		roadMap.put("junctions" ,reportJunctions()); 
+		roadMap.put("roads",reportRoads());
+		roadMap.put("vehicles",reportVehicles());
 		
 		
 		

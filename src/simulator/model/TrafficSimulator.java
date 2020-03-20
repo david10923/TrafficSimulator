@@ -22,22 +22,16 @@ public class TrafficSimulator {
 		this.list_of_events = new SortedArrayList<Event>();
 		this.time_of_simulation= 0;
 		this.map_of_roads = new RoadMap();
-		 
 	}
 	
 	
 	
 	public void addEvent (Event e) {
-		
 		this.list_of_events.add(e); 
-		
-		
-		
 	}
 	
 	public void advance() {
 		this.time_of_simulation++;
-		
 		
 		Iterator<Event> it  = this.list_of_events.iterator();
 		
@@ -48,16 +42,6 @@ public class TrafficSimulator {
 				it.remove();
 			}
 		}
-		
-		/*
-		for (int i = 0 ; i< this.list_of_events.size();i++) {
-			
-			if(this.list_of_events.get(i).getTime() == this.time_of_simulation) {
-					this.list_of_events.get(i).execute(this.map_of_roads);
-			}
-			this.list_of_events.remove(i);
-		}
-		*/
 		
 		//paso 3
 		
@@ -75,7 +59,7 @@ public class TrafficSimulator {
 		
 	}
 	
-	public void reset() {
+	public void reset() {// no se utiliza 
 		
 		this.map_of_roads.reset(); 		
 		this.list_of_events.clear();	
@@ -87,8 +71,8 @@ public class TrafficSimulator {
 	public JSONObject report() {
 		JSONObject j = new JSONObject();
 		
-		j.put("time : ", this.time_of_simulation);
-		j.put("state : ", this.map_of_roads.report()); 	
+		j.put("time", this.time_of_simulation);
+		j.put("state", this.map_of_roads.report()); 	
 		
 		return j;	
 		

@@ -61,33 +61,34 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 		}
 	}
 
-
-	 
-	
-	
-	
-
 	@Override
 	public void advance(int time)  {
-		
+		int c = 0;
 		
 		if(this.Status == VehicleStatus.TRAVELING) {// Donde inicializar la localizacion		
 			//a
 			this.ancientLocalization = this.Localization;
-			this.Localization = Math.min(this.Localization+this.Current_Speed, this.Road.getLength());
+			this.Localization = Math.min((this.Localization+this.Current_Speed), this.Road.getLength());
 			//b
+			
+			/*
 			this.Degree_of_Pollution= ((this.Localization-this.ancientLocalization)*this.Pollution/number);
 			
 			this.Pollution+= this.Degree_of_Pollution;
+			*/
+			
+			c = ((this.Localization-this.ancientLocalization)*this.Pollution);
+			this.Degree_of_Pollution+= c; 
+			this.Pollution+=c;
+			
 			
 			try {
-				this.Road.addContamination(this.Degree_of_Pollution);
+				this.Road.addContamination(c);// antes estaba degree of pollution 
 			} catch (InvalidArgumentException e) {
 				e.toString();
 			}
 			//c 
-			if(this.Localization == this.Road.getLength()) {
-				
+			if(this.Localization >= this.Road.getLength()) {				
 				this.Itinerary.get(this.Last_Junction_index).enter(this);
 				this.Status = VehicleStatus.WAITING;
 				this.Current_Speed = CERO;
@@ -95,9 +96,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 				
 			}
 			
-		
 		}
-		
 		
 	}
 

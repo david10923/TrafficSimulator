@@ -10,7 +10,8 @@ public class InterCityRoad extends Road{
 	private final static int  RAINY_TIME=10;
 	private final static int  WINDY_TIME =15;
 	private final static int  STORM_TIME =20;
-	private final static int OPERATION = 1000;
+	
+	private final static double CIEN = 100.0;
 	
 	private int contamination_limit;
 	
@@ -32,32 +33,28 @@ public class InterCityRoad extends Road{
 		
 		switch(this.environmental_conditions) {
 		case SUNNY: {
-				this.Global_Pollution = ((InterCityRoad.OPERATION-InterCityRoad.SUNNY_TIME)/ InterCityRoad.OPERATION)*this.Global_Pollution;
+				this.Global_Pollution = (int)(((CIEN-SUNNY_TIME)/CIEN)*this.Global_Pollution);
 			break; 
 		}
 		case CLOUDY:{
-				this.Global_Pollution = ((InterCityRoad.OPERATION-InterCityRoad.CLOUDY_TIME)/ InterCityRoad.OPERATION)*this.Global_Pollution;
+				this.Global_Pollution = (int)(((CIEN-CLOUDY_TIME)/CIEN)*this.Global_Pollution);
 			break;
 		}
 		case RAINY:{
-				this.Global_Pollution = ((InterCityRoad.OPERATION-InterCityRoad.RAINY_TIME)/ InterCityRoad.OPERATION)*this.Global_Pollution;
+				this.Global_Pollution = (int)(((CIEN-RAINY_TIME)/CIEN)*this.Global_Pollution);
 			break;
-			
 		}
 		case WINDY :{
-			this.Global_Pollution = ((InterCityRoad.OPERATION-InterCityRoad.WINDY_TIME)/ InterCityRoad.OPERATION)*this.Global_Pollution;
+			this.Global_Pollution = (int)(((CIEN-WINDY_TIME)/CIEN)*this.Global_Pollution);
 			break; 
-			
 		}
 		case STORM:{
-			this.Global_Pollution = ((InterCityRoad.OPERATION-InterCityRoad.STORM_TIME)/ InterCityRoad.OPERATION)*this.Global_Pollution;
+			this.Global_Pollution = (int)(((CIEN-STORM_TIME)/CIEN)*this.Global_Pollution);
 			break;
 		}
-		
 		}
-	
-		
 	}
+	
 	
 	public void updateSpeedLimit() {
 		
