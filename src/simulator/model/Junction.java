@@ -190,8 +190,10 @@ public class Junction extends SimulatedObject {
 
 			this.mapOfQueueRoad.put(r, this.IncomingRoadList.get(indexOfTheRoad).Vehicles);
 		*/
+		
 		IncomingRoadList.add(r);
-		List<Vehicle> cola = new ArrayList<Vehicle>();
+		List<Vehicle> cola = new ArrayList<Vehicle>();	
+		cola.addAll(mapOfQueueRoad.get(r));	
 		QueueList.add(cola);
 		this.mapOfQueueRoad.put(r, cola);
 		
