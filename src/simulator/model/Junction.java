@@ -140,6 +140,7 @@ public class Junction extends SimulatedObject {
         JSONArray arr = new JSONArray();
 
         for (int i = 0; i < this.mapOfQueueRoad.size(); i++) {
+        	
             arr.put(reportQueues(this.IncomingRoadList.get(i)));
         }
 
@@ -163,8 +164,11 @@ public class Junction extends SimulatedObject {
 
         JSONArray list = new JSONArray();
 
-        for (Vehicle v : this.mapOfQueueRoad.get(r))
-            list.put(v.report().getJSONObject(getId()));
+        //for (Vehicle v : this.mapOfQueueRoad.get(r))
+        for(int i = 0 ;i < this.mapOfQueueRoad.get(r).size();i++){
+        	 list.put(this.mapOfQueueRoad.get(r).get(i).getId());
+        }
+           
 
         return list;
 
@@ -179,23 +183,14 @@ public class Junction extends SimulatedObject {
 		if (r.getDestination() != this) {
 			throw new Exception("The road that you specified is not an incoming road");
 		} 
-		/*
-			this.IncomingRoadList.add(r);
-
-			this.QueueList = new ArrayList<List<Vehicle>>();
-			
-			indexOfTheRoad = this.IncomingRoadList.indexOf(r);
-
-			this.QueueList.add(this.IncomingRoadList.get(indexOfTheRoad).Vehicles);
-
-			this.mapOfQueueRoad.put(r, this.IncomingRoadList.get(indexOfTheRoad).Vehicles);
-		*/
 		
 		IncomingRoadList.add(r);
 		List<Vehicle> cola = new ArrayList<Vehicle>();	
-		cola.addAll(mapOfQueueRoad.get(r));	
+	
 		QueueList.add(cola);
 		this.mapOfQueueRoad.put(r, cola);
+		
+		
 		
 		
 		
@@ -205,10 +200,13 @@ public class Junction extends SimulatedObject {
 	void addOutgoingRoad(Road r) throws Exception {
 		
 		if(!this.OutgoingRoadList.isEmpty()){
-		if ((this.OutgoingRoadList.containsKey(r.getDestination())) || (r.getSource() != this)) {// si alguna carretera va al cruce o
-																					// r es un cruce entrante
-			throw new Exception("The road can not be a OutgoingRoad");
-		}
+			if ((this.OutgoingRoadList.containsKey(r.getDestination()))){// si alguna carretera va al cruce o
+																						// r es un cruce entrante
+				throw new Exception("The road can not be a OutgoingRoad");
+			}
+			if((r.getSource() != this)){
+				throw new Exception("The road can not be a OutgoingRoad");
+			}
 		
 		}
 		
@@ -217,29 +215,44 @@ public class Junction extends SimulatedObject {
 		}
 
 	public void enter(Vehicle v) {
-		boolean ok = false;
+		
+		mapOfQueueRoad.get(v.getRoad()).add(v);
+		
+		
+	
+		/*
+		 * boolean ok = false;
 		int i = 0;
+		List<Vehicle> lista = new ArrayList<Vehicle>();
+		lista = this.mapOfQueueRoad.get(v.getRoad());
+		
 
-		List<Vehicle> lista = this.mapOfQueueRoad.get(v.getRoad());
-
-		while (i < this.QueueList.size() && ok) {
-			if (lista == this.QueueList.get(i)) {
-				ok = true;
+			while (i < this.QueueList.size() && ok) {
+				if (lista == this.QueueList.get(i)) {
+					ok = true;
+				}
 			}
-		}
 
-		lista.add(v);
+			lista.add(v);	
+			
 
-		try {
-			v.getRoad().enter(v);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.getMessage();
-		}
+			try {
+				v.getRoad().enter(v);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.getMessage();
+			}
+			
+			this.QueueList.set(i, lista);
+			this.mapOfQueueRoad.put(v.getRoad(), lista);
+			
+			
+			
+		//}
+		 * 
+		 */
 
-		this.QueueList.set(i, lista);
-		this.mapOfQueueRoad.put(v.getRoad(), lista);
-
+	
 	}
 
 	public Road roadTo(Junction j) {

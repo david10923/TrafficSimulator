@@ -19,15 +19,17 @@ public class InterCityRoad extends Road{
 	protected InterCityRoad(String id ,Junction srcJunc ,Junction destJunc ,int maxSpeed,int contLimit ,int length,Weather weather) throws Exception {
 		super(id,srcJunc,destJunc,maxSpeed,contLimit,length,weather);
 		
+		/*
 		this.Vehicles = new ArrayList<Vehicle>();
 		this.Max_Speed = maxSpeed; 
 		this.Length = length; 
 		this.environmental_conditions = weather;
 		this.Destination = destJunc; 
 		this.Source= srcJunc; 
-		this.Current_Max_Speed_limit = this.Max_Speed;
-		this.Global_Pollution = contLimit;
-		
+		this.Current_Max_Speed_limit = Max_Speed;
+		//this.Global_Pollution = contLimit;
+		this.Masive_Pollution= contLimit;
+		*/
 	}
 
 	public void reduceTotalContamination() {
@@ -57,11 +59,10 @@ public class InterCityRoad extends Road{
 	}
 	
 	
-	public void updateSpeedLimit() {
+	public void updateSpeedLimit() {		
 		
-		//estaba contamination limit 
 		
-		if(this.Global_Pollution< this.Masive_Pollution) {
+		if(this.Global_Pollution> this.Masive_Pollution) {
 			this.Current_Max_Speed_limit = (int)(this.Max_Speed *0.5);
 		}else
 			this.Current_Max_Speed_limit = this.Max_Speed;

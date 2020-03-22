@@ -47,8 +47,19 @@ public abstract class Road extends SimulatedObject {
 			this.Destination = destJunc; 
 			this.Source= srcJunc; 
 			this.Current_Max_Speed_limit = this.Max_Speed;
-			this.Global_Pollution = contLimit ; 
-						
+			this.Vehicles = new ArrayList<Vehicle>();
+			this.Masive_Pollution= contLimit; 
+			this.Global_Pollution=0;
+			
+			/*
+			try {
+				this.Source.addOutgoingRoad(this);
+				this.Destination.addIncomingRoad(this);			
+				
+			} catch (Exception e) {
+				e.getMessage();
+			}
+			*/
 		}
 	}
 			
@@ -74,6 +85,7 @@ public abstract class Road extends SimulatedObject {
 			}
 			c.advance(time);		
 		}	
+		
 		
 		Collections.sort(this.Vehicles); 			
 		
@@ -125,8 +137,10 @@ public abstract class Road extends SimulatedObject {
 	public void addContamination(int c) throws InvalidArgumentException{// el mismo caso que weather
 		if(c<0) 
 			throw new InvalidArgumentException("The pollution is less than cero");
-		else
-			this.Global_Pollution += c ;
+		
+		//System.out.println("He añadido "+ c);
+	
+		this.Global_Pollution += c ;
 			
 	}
 	

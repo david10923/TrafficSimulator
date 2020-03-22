@@ -57,6 +57,8 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 			this.Pollution = 0;
 			this.Last_Junction_index=0;
 			this.Status= VehicleStatus.PENDING;
+			this.Current_Speed = 0;
+			
 			
 		}
 	}
@@ -65,34 +67,32 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 	public void advance(int time)  {
 		int c = 0;
 		
-		if(this.Status == VehicleStatus.TRAVELING) {// Donde inicializar la localizacion		
-			//a
-			this.ancientLocalization = this.Localization;
-			this.Localization = Math.min((this.Localization+this.Current_Speed), this.Road.getLength());
-			//b
+		if(this.Status == VehicleStatus.TRAVELING) {		
+		
 			
-			/*
-			this.Degree_of_Pollution= ((this.Localization-this.ancientLocalization)*this.Pollution/number);
+			//this.Global_distance_traveled += this.Localization-this.ancientLocalization;
+			int suma = this.Localization+this.Current_Speed; 
+			this.Localization = Math.min(suma, this.Road.getLength());
+			this.Global_distance_traveled += this.Localization-this.ancientLocalization;
 			
-			this.Pollution+= this.Degree_of_Pollution;
-			*/
 			
 			c = ((this.Localization-this.ancientLocalization)*this.Degree_of_Pollution);
-			this.Degree_of_Pollution+= c; 				
+			this.Pollution+=c;		
 			
 			try {
 				this.Road.addContamination(c); 
 			} catch (InvalidArgumentException e) {
-				e.toString();
+				e.getMessage();
 			}
-			//c 
+			
 			if(this.Localization >= this.Road.getLength()) {				
-				this.Itinerary.get(this.Last_Junction_index).enter(this);
-				this.Status = VehicleStatus.WAITING;
-				this.Current_Speed = CERO;
+				this.Itinerary.get(this.Last_Junction_index+1).enter(this);
+				this.Status = VehicleStatus.WAITING;				
 				this.Last_Junction_index++;
 				
 			}
+			
+			this.ancientLocalization = this.Localization;
 			
 		}
 		
@@ -148,6 +148,8 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 			throw new Exception("The vehice is travelling");
 		}
 		
+		
+		
 		if(this.Last_Junction_index +1 == this.Itinerary.size()) {
 			this.Road.exit(this);
 			this.Status = VehicleStatus.ARRIVED;			
@@ -162,6 +164,7 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 				this.Road = actualJunc.roadTo(nextJunc);
 				
 				this.Status = VehicleStatus.TRAVELING;
+				
 				
 				try {
 					this.Road.enter(this);
@@ -181,6 +184,9 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 				
 				this.Road=actualJunc.roadTo(nextJunc);	
 				
+				this.Localization = CERO; 
+				this.Current_Speed = CERO;
+				
 				if(this.Road != null) {
 					try {
 						this.Road.enter(this);
@@ -189,7 +195,8 @@ public class Vehicle extends SimulatedObject implements Comparable<Vehicle> {
 						e.getMessage();
 					}
 					
-					this.Localization =CERO;
+					
+					
 					this.Status = VehicleStatus.TRAVELING;
 				}
 			}

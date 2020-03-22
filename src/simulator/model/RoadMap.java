@@ -50,7 +50,8 @@ public class RoadMap {
 		}
 		
 		this.IdRoadMap.put(r.getId(), r);
-		this.RoadList.add(r);
+		this.RoadList.add(r);	
+		
 		
 		try {
 			r.Source.addOutgoingRoad(r);
@@ -60,6 +61,7 @@ public class RoadMap {
 			e.getMessage();
 		}
 		
+		
 	}
 	
 	protected void addVehicle(Vehicle v) throws InvalidArgumentException {
@@ -67,15 +69,16 @@ public class RoadMap {
 		
 		
 		if (!v.recorreItinerario()) {
-			ok2=true;
+			throw new InvalidArgumentException("The itinerary is not possible");
 		}
-		if(this.VehicleList.contains(v) && ok2) {
+		if(this.VehicleList.contains(v)) {
 			throw new  InvalidArgumentException("This Vehicle can not be add : "+ v._id);
-		}else {
+		}
+		
+			
 			this.VehicleList.add(v);
 			this.IdVehicleMap.put(v._id, v);
-			
-		}
+		
 	}
 	
 	public Vehicle getVehicle(String id) {

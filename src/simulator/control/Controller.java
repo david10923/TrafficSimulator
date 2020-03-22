@@ -52,7 +52,7 @@ public class Controller {
 	
 	
 	public void run (int in , OutputStream out ) {
-		int i = 0;
+		int i =0;
 		
 		if (out == null) {
 			out = new OutputStream() {
@@ -70,6 +70,7 @@ public class Controller {
 			 p.print(_sim.report());
 			 p.println(",");
 			 i++;
+		
 		}
 		_sim.advance();
 		p.print(_sim.report());		

@@ -27,7 +27,7 @@ public class NewCityRoadEvent  extends NewRoadEvent{
 		Road r = null;
 		
 			try {
-				 r= new InterCityRoad(this.id, this.src,this.dest, this.maxSpeed, this.co2Limit, this.length, this.weather);
+				 r= new CityRoad(this.id, this.src,this.dest, this.maxSpeed, this.co2Limit, this.length, this.weather);
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

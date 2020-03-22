@@ -27,34 +27,31 @@ public class NewSetContClassEvent extends Event{
 	void execute(RoadMap map) {
 		String id;
 		int j = 0;
-		boolean ok = false;
+		boolean ok = true;
 		
 		
-		for(int i = 0;i< this.cs.size();i++) {
-			
-			try{
+		for(int i = 0;i< this.cs.size();i++) {			
+			//try{
 				id = this.cs.get(i).getFirst(); 
 				
 				while(j < map.getVehicles().size()  && ok) {
 					
 					if(map.getVehicles().get(j).getId().equals(id)) {
-						ok = true;
+						ok = false;
 						try {
 							map.getVehicles().get(j).setContaminationClass(this.cs.get(i).getSecond());
+							
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.getMessage();
 						}
 					}
+					j++;
 				}
 				
-			}catch(Exception e ){
-				System.out.println("This road not exits");
-			}
-			
-						
-			
-			
+			//}catch(Exception e )
+				//System.out.println("This road not exits");
+			ok = true;
 		}
 		
 	}

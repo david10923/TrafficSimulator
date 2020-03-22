@@ -13,7 +13,7 @@ public class CityRoad extends Road{
 	protected CityRoad(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) throws Exception {
 		super(id, srcJunc, destJunc, maxSpeed, contLimit, length, weather);
 		
-		this.Vehicles = new ArrayList<Vehicle>();
+		/*
 	
 		this.Max_Speed = maxSpeed; 
 		this.Length = length; 
@@ -22,6 +22,7 @@ public class CityRoad extends Road{
 		this.Source= srcJunc; 
 		this.Current_Max_Speed_limit = this.Max_Speed;
 		this.Global_Pollution = contLimit ; 
+		*/
 	}
 
 	@Override

@@ -57,6 +57,7 @@ public class TrafficSimulator {
 		}
 		
 		
+	
 	}
 	
 	public void reset() {// no se utiliza 
