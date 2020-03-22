@@ -101,7 +101,7 @@ public class Junction extends SimulatedObject {
 		
 		if(nextGreen  != this.TrafficLight){
 			this.TrafficLight = nextGreen; 
-			this.Last_TrafficLight_change = time ; 
+			this.Last_TrafficLight_change = time; 
 			
 		}
 				
@@ -217,7 +217,6 @@ public class Junction extends SimulatedObject {
 	public void enter(Vehicle v) {
 		
 		mapOfQueueRoad.get(v.getRoad()).add(v);
-		
 		
 	
 		/*

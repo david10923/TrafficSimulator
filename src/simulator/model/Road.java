@@ -78,10 +78,12 @@ public abstract class Road extends SimulatedObject {
 		for(Vehicle c : this.Vehicles) {
 						
 			try {
-				c.setSpeed(calculateVehicleSpeed(c));
+				if(c.getStatus() != VehicleStatus.WAITING){
+					c.setSpeed(calculateVehicleSpeed(c));
+				}				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e.getMessage();
 			}
 			c.advance(time);		
 		}	
@@ -99,7 +101,7 @@ public abstract class Road extends SimulatedObject {
 		JSONObject road = new JSONObject();
 		
 		road.put("id", this._id);
-		road.put("speedLimit", this.Max_Speed);
+		road.put("speedlimit", this.Current_Max_Speed_limit);
 		road.put("weather", this.environmental_conditions);
 		road.put("co2", this.Global_Pollution);
 		road.put("vehicles",reportVehicle());

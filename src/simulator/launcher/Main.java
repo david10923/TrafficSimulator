@@ -124,7 +124,6 @@ public class Main {
 		Factory<DequeingStrategy> dqsFactory = new BuilderBasedFactory<>(dqbs);
 		
 		List<Builder<Event>> eventBuilders = new ArrayList<>();
-		eventBuilders.add(new NewJunctionEventBuilder(lssFactory, dqsFactory));
 		eventBuilders.add(new NewCityRoadEventBuilder());
 		eventBuilders.add(new NewJunctionEventBuilder(lssFactory, dqsFactory));
 		eventBuilders.add(new NewInterCityRoadEventBuilder());
