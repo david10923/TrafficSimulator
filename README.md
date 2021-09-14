@@ -20,3 +20,6 @@ Los eventos se leen de un fichero de texto antes de que la simulación comience.
 vez leídos, se inicia la simulación, que se ejecutará un número determinado de unidades
 de tiempo (llamadas ticks) y, en cada tick, se mostrará el estado de la simulación, bien en
 la consola o en un fichero de texto.
+
+
+![image](https://user-images.githubusercontent.com/49251020/133243681-c8df4ee0-d6e0-46c3-9e7f-d1d71cc0da15.png)
